@@ -127,7 +127,7 @@ export default function AboutUs(){
                             <Chip label="Front-end" color="primary" sx={{ fontWeight: 600,  maxWidth: 'max-content' }} />
                             <Typography variant="h6">Ivan Đolo</Typography>
                             <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: 380, lineHeight: '200%'  }}>
-                                Student treće godine računarstva. Imam 22 godinu i dolazim iz Širokog Brijega.
+                                Student treće godine računarstva. Imam 22 godine i dolazim iz Širokog Brijega.
                             </Typography>
                             <Button
                                 onClick={navigateOnIvansGithub}
