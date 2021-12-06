@@ -1,0 +1,32 @@
+html { scroll-behavior: smooth; } 
+a {
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+}
+
+.ScrollbarsCustom-Track.ScrollbarsCustom-TrackY,
+.ScrollbarsCustom-Thumb.ScrollbarsCustom-ThumbY{
+    width: 0px !important;
+}
+
+.ScrollbarsCustom-Wrapper{
+    inset: 0px !important;
+}
+
+.css-iur3w5-MuiPaper-root-MuiDrawer-paper{
+    background-image: none !important;
+}
+
+#profile-tabs > div.MuiBox-root.css-1b46un8 > div{
+    border: none !important;
+}
+
+.MuiChip-root.MuiChip-filled.MuiChip-colorSuccess.MuiChip-filledSuccess {
+    background-color: #EEFBEA !important;
+    color: #229A16 !important;
+}
+
+.MuiChip-root.MuiChip-filled.MuiChip-colorError.MuiChip-filledError {
+    background-color: #FBEBEB !important;
+    color: #d32f2f !important;
+}
