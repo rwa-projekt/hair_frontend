@@ -18,7 +18,7 @@ const MainRoutes = {
     children: [
         {
             path: '/',
-            element: <Navigate replace to="/website/home" />
+            element: <Navigate to="/website/about-us" />
         },
         {
             path: '/website',
@@ -29,7 +29,7 @@ const MainRoutes = {
                 },
                 {
                     path: '',
-                    element: <Navigate replace to="home" />
+                    element: <Navigate to="home" />
                 },
                 // {
                 //     path: 'home',
