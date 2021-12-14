@@ -25,6 +25,6 @@ const createStoreWithFirebase = compose(
 const store = createStoreWithFirebase(Reducers);
 
 // Persister
-const persister = 'MUI';
+const persister = 'RWA';
 
 export { store, persister };

@@ -12,7 +12,7 @@ const icons = {
 const about = {
     id: 'about',
     title: 'About',
-    caption: "Informations about barbershop",
+    caption: "Informations about barber booking",
     type: 'group',
     children: [
         {

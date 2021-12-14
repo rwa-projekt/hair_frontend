@@ -1,4 +1,5 @@
 import React from 'react'
+import { useIsMobile } from '../../../../../hooks/useDevice'
 
 // MUI
 import { Stack, Typography } from '@mui/material'
@@ -6,11 +7,14 @@ import { Stack, Typography } from '@mui/material'
 
 export default function AboutUs({ type = "Neke informacije", title = "", subtitle = "" }){
 
+    // Variables
+    const isMobile = useIsMobile()
+
     return(
         <Stack
             direction='column'
             alignItems="flex-start"
-            sx={{  width: '100%', mb: 12 }}
+            sx={{  width: '100%', mb: isMobile ? 4 : 12 }}
         >
             <Typography 
                 variant="subtitle2" 

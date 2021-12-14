@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import loadable from '@loadable/component'
 
 // Layout
+import { RequireAuth as AuthGuard } from '../auth'
 import MainLayout from '../layout/App/index';
 
 // App views
@@ -19,9 +20,12 @@ const ChangePassword = loadable(() => import('../views/App/Profile/components/Ch
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const AppRoutes = {
     path: '/',
-    element: <MainLayout />,
+    element: 
+        <AuthGuard>
+            <MainLayout />
+        </AuthGuard>,
     children: [
         {
             path: '*',
@@ -76,4 +80,4 @@ const MainRoutes = {
     ]
 };
 
-export default MainRoutes;
+export default AppRoutes;

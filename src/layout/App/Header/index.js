@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion, useViewportScroll } from 'framer-motion'
 import useGetMenuItem from '../../../hooks/useGetMenuItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { TOGGLE_SIDEBAR_COLLAPSED, TOGGLE_SIDEBAR_OPENED, TOGGLE_MODE } from '../../../store/modules/ui/actions'
+import { TOGGLE_SIDEBAR_COLLAPSED, TOGGLE_SIDEBAR_OPENED, TOGGLE_MODE } from '../../../state/modules/ui/actions'
 
 // MUI
 import { Box, Typography, IconButton, useTheme, useMediaQuery, useScrollTrigger } from '@mui/material'
@@ -62,7 +62,7 @@ export default function Header({ drawerOpen, setDrawerOpen }){
   async function toggleMode(){
     const newMode = mode === 'light' ? 'dark' : 'light'
     dispatch({ type: TOGGLE_MODE, mode: newMode })
-    await localStorage.setItem("theme-mode", newMode )
+    await localStorage.setItem("bb:theme-mode", newMode )
   }
 
   return (
@@ -117,10 +117,11 @@ export default function Header({ drawerOpen, setDrawerOpen }){
 
         {/* Account */}
         <AccountMenu mode={mode} setMode={toggleMode} />
+        
 
 
         {/* Theme toggler */}
-        <ThemeToggler mode={mode} setMode={toggleMode} />
+        {/* <ThemeToggler mode={mode} setMode={toggleMode} /> */}
     </Box>
   );
 };

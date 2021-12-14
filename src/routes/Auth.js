@@ -11,7 +11,7 @@ const Register = loadable(() => import('../views/Auth/Register'));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const AuthRoutes = {
     path: '/',
     element: <AuthLayout />,
     children: [
@@ -30,4 +30,4 @@ const MainRoutes = {
     ]
 };
 
-export default MainRoutes;
+export default AuthRoutes;

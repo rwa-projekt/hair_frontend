@@ -10,14 +10,9 @@ import { Typography, Breadcrumbs, Link, Box } from '@mui/material'
 
 export default function PageTitle(){
 
-    // Variables
+    // Hooks
     const navigate = useNavigate()
     const menuItem = useGetMenuItem()
-
-    // Methods
-    function handleLinkClick(url) {
-        navigate(url)
-    }
 
     if(!menuItem.breadcrumbs){
         return null;
@@ -36,8 +31,8 @@ export default function PageTitle(){
                     <Link 
                         underline="hover" 
                         color="inherit" 
-                        href="/dashboard"
-                        onClick={() => handleLinkClick('/dashboard')}
+                        onClick={() => navigate('/dashboard')}
+                        sx={{ cursor: 'pointer' }}
                     >
                         Dashboard
                     </Link>

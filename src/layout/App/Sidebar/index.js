@@ -3,7 +3,7 @@ import useIsMount from '../../../hooks/useIsMount'
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
-import { TOGGLE_SIDEBAR_COLLAPSED } from '../../../store/modules/ui/actions'
+import { TOGGLE_SIDEBAR_COLLAPSED } from '../../../state/modules/ui/actions'
 
 // MUI
 import { Box, List, ListItem, ListItemButton, IconButton, useMediaQuery, useTheme } from '@mui/material';

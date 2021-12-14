@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 
 // MUI
 import { Stack, Box, Typography, Divider, Button, Link } from '@mui/material'
+import { LoadingButton } from '@mui/lab';
+import SaveIcon from '@mui/icons-material/Save';
 import Input from '../../../form-components/Input'
 
 // Form
@@ -21,27 +23,24 @@ export default function Login(){
     const methods = useForm({ defaultValues, mode: 'onChange' }); // Rerendering on change - live validation
     const { handleSubmit, register, control, formState } = methods;
 
-    console.log(formState)
-
     // Methods
     function handleNavigate() {
         navigate('/auth/login')
     }
 
     function onSubmit(data) {
-        console.log(data)
         navigate('/dashboard')
     }
 
     return(
-        <Stack spacing={6} sx={{ maxWidth: 420 }}>
+        <Stack spacing={6} sx={{ maxWidth: 480, width: '100%' }}>
             {/* Title */}
             <Box>
                 <Typography variant="h4" sx={{ mb: 1 }}>
-                    Welcome to application
+                    Dobrodošli u BarberBooking
                 </Typography>
                 <Typography variant="subtitle2" sx={{ opacity: .8, fontWeight: 400 }}>
-                    Create new account to start
+                    Stvorite račun da biste nastavili
                 </Typography>
             </Box>
 
@@ -53,7 +52,7 @@ export default function Login(){
                     name="fullName"
                     required 
                     control={control} 
-                    label="Full name"
+                    label="Ime i prezime"
                     inputMode="text"
                     type="fullName"
                     {...register("fullName", { 
@@ -65,7 +64,7 @@ export default function Login(){
                     name="email"
                     required 
                     control={control} 
-                    label="E-mail address"
+                    label="E-mail adresa"
                     inputMode="email"
                     type="email"
                     {...register("email", { 
@@ -78,7 +77,7 @@ export default function Login(){
                     name="password" 
                     required
                     control={control} 
-                    label="Password"
+                    label="Lozinka"
                     type="password"
                     autoComplete="current-password"
                     {...register("password", { 
@@ -88,25 +87,40 @@ export default function Login(){
             </Stack>
 
             <Divider>
-                Already have an account?
+                Već imate račun?
                 <Link 
                     onClick={handleNavigate} 
                     sx={{ ml: 1, cursor: 'pointer' }}
                 >
-                    Login now
+                    Prijavite se
                 </Link>
             </Divider>
 
-            <Button
-                onClick={handleSubmit(onSubmit)}
-                sx={{ height: 54, textTransform: 'none' }} 
-                variant="contained" 
-                fullWidth
-                inputMode="submit"
-                disabled={!formState.isValid}
-            >
-                { formState.isValid ? 'Register' : 'Enter credentials' }
-            </Button>
+            {
+                false ?
+                    <LoadingButton
+                        loading
+                        loadingPosition="start"
+                        startIcon={<SaveIcon />}
+                        variant="outlined"
+                        sx={{ height: 54, textTransform: 'none' }} 
+                    >
+                        Stvaranje računa...
+                    </LoadingButton>
+                    :
+                    <Button
+                        onClick={handleSubmit(onSubmit)}
+                        sx={{ height: 54, textTransform: 'none' }} 
+                        variant="contained" 
+                        fullWidth
+                        inputMode="submit"
+                        disabled={!formState.isValid}
+                    >
+                        { formState.isValid ? 'Stvorite račun' : 'Unesite podatke' }
+                    </Button>
+            }
+
+            <div style={{ minHeight: 0 }} /> {/* Padding bottom */}
         </Stack>
     )
 }

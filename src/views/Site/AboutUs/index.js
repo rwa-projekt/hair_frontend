@@ -19,6 +19,10 @@ export default function AboutUs(){
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+    // Styles
+    const imageWidth = isMobile ? '80vw' : 480;
+    const textWidth = isMobile ? 'calc(100vw - 40px)' : 480;
+
     // Methods
     function navigateOnDragansGithub() {
         window.open('https://github.com/dragan00', '_blank')
@@ -30,9 +34,8 @@ export default function AboutUs(){
 
     return(
         <Stack
-            spacing={20}
+            spacing={isMobile ? 10 : 20}
             sx={{
-                pt: 4,
                 height: '100%', 
                 minHeight: 'calc(100vh - 81px - 16px)' // 81px => Header, 16px => pt from container 
             }}
@@ -45,7 +48,7 @@ export default function AboutUs(){
                 />
 
                 <Stack
-                    direction={ isMobile ? 'column' : 'row' }
+                    direction={ isMobile ? 'column-reverse' : 'row' }
                     alignItems="center"
                     justifyContent="space-between"
                     sx={{ width: '100%', mt: 4 }}
@@ -57,7 +60,7 @@ export default function AboutUs(){
                     >
                         <Box>
                             <Typography variant="h6" sx={{ mb: 1.5 }}>Općenito</Typography>
-                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: 400, lineHeight: '200%' }}>
+                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: textWidth, lineHeight: '200%' }}>
                                 Cilj ovog projekta je modernizirati i olakšati frizerske narudžbe.
                                 Nadamo se da ćemo uz ovaj projekt ostvariti potrebno 
                                 znanje i motivaciju za daljni rad u ovom području.
@@ -66,7 +69,7 @@ export default function AboutUs(){
 
                         <Box>
                             <Typography variant="h6" sx={{ mb: 1.5 }}>Tehnologije</Typography>
-                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: 400, lineHeight: '200%'  }}>
+                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: textWidth, lineHeight: '200%'  }}>
                                 Na backend-u su korištene sljedeće tehnologije: 
                                 <Box sx={{ color: 'primary.dark', fontWeight: 600 }}>Python, Django, PostgreSQL </Box><br />
                                 Na frontend-u su korištene sljedeće tehnologije: 
@@ -76,8 +79,8 @@ export default function AboutUs(){
 
                     </Stack>
 
-                    <Box sx={{ width: 'max-content' }}>
-                        <img style={{ maxWidth: 480 }} src={AboutProjectIllustration} />
+                    <Box sx={{ width: imageWidth }}>
+                        <img style={{ maxWidth: imageWidth }} src={AboutProjectIllustration} />
                     </Box>
                 </Stack>
             </Box>
@@ -89,7 +92,7 @@ export default function AboutUs(){
                 />
 
                 <Stack
-                    direction={ isMobile ? 'column' : 'row' }
+                    direction={ isMobile ? 'column-reverse' : 'row' }
                     alignItems="center"
                     sx={{ width: '100%' }}
                 >
@@ -105,7 +108,7 @@ export default function AboutUs(){
                         >
                             <Chip label="Back-end" color="primary" sx={{ fontWeight: 600,  maxWidth: 'max-content' }} />
                             <Typography variant="h6">Dragan Zovko</Typography>
-                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: 380, lineHeight: '200%'  }}>
+                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: textWidth, lineHeight: '200%'  }}>
                                 Student treće godine računarstva. Imam 21 godinu i dolazim iz Širokog Brijega.
                             </Typography>
                             <Button 
@@ -126,7 +129,7 @@ export default function AboutUs(){
                         >
                             <Chip label="Front-end" color="primary" sx={{ fontWeight: 600,  maxWidth: 'max-content' }} />
                             <Typography variant="h6">Ivan Đolo</Typography>
-                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: 380, lineHeight: '200%'  }}>
+                            <Typography variant="subtitle2" sx={{ fontWeight: 400, opacity: .8, maxWidth: textWidth, lineHeight: '200%'  }}>
                                 Student treće godine računarstva. Imam 22 godine i dolazim iz Širokog Brijega.
                             </Typography>
                             <Button
@@ -139,8 +142,8 @@ export default function AboutUs(){
                             </Button>
                         </Stack>
                     </Stack>
-                    <Box sx={{ width: 'max-content' }}>
-                        <img style={{ maxWidth: 480 }} src={AboutUsIllustration} />
+                    <Box sx={{ width: imageWidth, mb: isMobile && 8 }}>
+                        <img style={{ width: imageWidth }} src={AboutUsIllustration} />
                     </Box>
                 </Stack>
             </Box>

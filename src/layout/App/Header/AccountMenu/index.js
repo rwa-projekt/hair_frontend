@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { TOGGLE_SIDEBAR_OPENED } from '../../../../store/modules/ui/actions'
+import { useAuth } from '../../../../auth'
+import { TOGGLE_SIDEBAR_OPENED } from '../../../../state/modules/ui/actions'
 import Switch from '../../../../components/CustomSwitch'
 
 // MUI
@@ -9,7 +10,7 @@ import { useLayoutCtx } from '@mui-treasury/layout'
 import { Avatar, Menu, Stack, MenuItem, ListItemIcon, ListItemText,  Typography, Divider, Box, IconButton, Dialog, useTheme, useMediaQuery } from '@mui/material'
 
 // Icons
-import {  Logout, AccountCircle } from '@mui/icons-material'
+import {  Logout, AccountCircle, ChevronLeftOutlined } from '@mui/icons-material'
 import {  IconLayoutSidebar } from '@tabler/icons'
 import MoonIcon from '../../../../components/ThemeMode/MoonIcon'
 import SunIcon from '../../../../components/ThemeMode/SunIcon'
@@ -21,13 +22,16 @@ import { PaperProps } from './styles'
 
 export default function AccountMenu({ mode, setMode }) {
 
-  // Variables
+  // Hooks
   const navigate = useNavigate()
-  const [dialogOpened, setDialogOpened] = useState(false)
   const dispatch = useDispatch()
+  const theme = useTheme();
+  const auth = useAuth()
+
+  // Variables
+  const [dialogOpened, setDialogOpened] = useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuOpen = Boolean(anchorEl);
-  const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const menuElevation = theme.palette.mode === 'dark' && 2
   const { 
@@ -57,14 +61,20 @@ export default function AccountMenu({ mode, setMode }) {
   function onClose() {
       setDialogOpened(false)
       handleClose()
-    }
+  }
 
   function handleOnLogout(){
     navigate('/auth/login', { replace: true })
   }
 
   function handleOnProfileClick(){
+    onClose()
     navigate('/user/me')
+  }
+
+  function toggleMode(){
+    setMode()
+    onClose()
   }
 
   const Content = 
@@ -100,7 +110,7 @@ export default function AccountMenu({ mode, setMode }) {
         </MenuItem>
 
         {/* Dark mode switch */}
-        <MenuItem sx={{ py: 1.2 }} onClick={setMode}>
+        <MenuItem sx={{ py: 1.2 }} onClick={toggleMode}>
             <ListItemIcon>
                 { 
                     mode === 'light' ?
@@ -154,9 +164,19 @@ export default function AccountMenu({ mode, setMode }) {
   return (
     <>
         {/* Account */}
-        <IconButton onClick={handleClick} sx={{ p: '10px' }} aria-label="search">
+        {/* <IconButton onClick={handleClick} sx={{ p: '10px' }} aria-label="search">
             <AccountCircle />
-        </IconButton>
+        </IconButton> */}
+        <Stack direction="row" spacing={2} alignItems="center">
+            <Avatar sx={{ width: 34, height: 34 }} />
+            <Stack>
+                <Typography variant="subtitle2" sx={{ mb: -.5 }}>{ auth.user.fullName }</Typography>
+                <Typography variant="caption" sx={{ opacity: .65 }}>{ auth.user.email }</Typography>
+            </Stack>
+            <IconButton onClick={handleClick}>
+                <ChevronLeftOutlined sx={{ transform: `rotate(${menuOpen ? '90deg' : '-90deg'})`, transition: '150ms ease' }} />
+            </IconButton>
+        </Stack>
 
         <Menu
             anchorEl={anchorEl}

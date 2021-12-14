@@ -3,25 +3,28 @@ import { Navigate } from "react-router-dom";
 import loadable from '@loadable/component'
 
 // Layout
-import SiteLayout from '../layout/Site/index';
+import { RequireAdmin as AuthGuard } from '../auth'
+import AdminLayout from '../layout/Admin/index';
 
 // App views
 const NotFound = loadable(() => import('./fallback-routes/404'));
-const LandingPage = loadable(() => import('../views/Site/LandingPage'));
-const AboutUs = loadable(() => import('../views/Site/AboutUs'));
+const Dashboard = loadable(() => import('../views/Admin/Dashboard'));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const MainRoutes = {
+const AdminRoutes = {
     path: '/',
-    element: <SiteLayout />,
+    element: 
+        <AuthGuard>
+            <AdminLayout />
+        </AuthGuard>,
     children: [
         {
             path: '/',
-            element: <Navigate to="/website/about-us" />
+            element: <Navigate to="/admin/dashboard" />
         },
         {
-            path: '/website',
+            path: '/admin',
             children:[
                 {
                     path: '*',
@@ -29,19 +32,15 @@ const MainRoutes = {
                 },
                 {
                     path: '',
-                    element: <Navigate to="home" />
+                    element: <Navigate to="dashboard" />
                 },
-                // {
-                //     path: 'home',
-                //     element: <LandingPage/>
-                // },
                 {
-                    path: 'about-us',
-                    element: <AboutUs/>
+                    path: 'dashboard',
+                    element: <Dashboard/>
                 }
             ]
         },
     ]
 };
 
-export default MainRoutes;
+export default AdminRoutes;
