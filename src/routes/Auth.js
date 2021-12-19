@@ -4,6 +4,7 @@ import loadable from '@loadable/component'
 
 // Layout
 import AuthLayout from '../layout/Auth/index';
+import { RequireUser } from '../auth'
 
 // App views
 const Login = loadable(() => import('../views/Auth/Login'));
@@ -13,7 +14,10 @@ const Register = loadable(() => import('../views/Auth/Register'));
 
 const AuthRoutes = {
     path: '/',
-    element: <AuthLayout />,
+    element: 
+        <RequireUser>
+            <AuthLayout />
+        </RequireUser>,
     children: [
         {
             path: '/',

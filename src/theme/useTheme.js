@@ -15,6 +15,7 @@ export default function useCustomTheme(){
     const theme = useTheme()
     const dispatch = useDispatch()
     const mode = useSelector(state => state.UI.mode)
+    const isLight = mode === 'light'
 
     // Methods
     useEffect(() => {
@@ -48,6 +49,14 @@ export default function useCustomTheme(){
             //   dark: '#002fb2',
             //   contrastText: '#fff',
             // },
+            secondary:{
+              main: '#DF6D73',
+              light: isLight ? '#FCEFF0' : '#643739'
+            },
+            success: {
+              main: '#44b700',
+              contrastText: '#fff'
+            }
           },
           typography: {
               fontFamily: `"Poppins", "Helvetica", "Arial", sans-serif`,

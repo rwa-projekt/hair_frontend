@@ -7,16 +7,17 @@ import Switch from '../../../../components/CustomSwitch'
 
 // MUI
 import { useLayoutCtx } from '@mui-treasury/layout'
-import { Avatar, Menu, Stack, MenuItem, ListItemIcon, ListItemText,  Typography, Divider, Box, IconButton, Dialog, useTheme, useMediaQuery } from '@mui/material'
+import { Avatar, Menu, Stack, MenuItem, ListItemIcon, ListItemText, Badge, Typography, Divider, Box, IconButton, Dialog, useTheme, useMediaQuery } from '@mui/material'
 
 // Icons
-import {  Logout, AccountCircle, ChevronLeftOutlined } from '@mui/icons-material'
+import {  Logout, ChevronLeftOutlined, AdminPanelSettingsOutlined } from '@mui/icons-material'
 import {  IconLayoutSidebar } from '@tabler/icons'
 import MoonIcon from '../../../../components/ThemeMode/MoonIcon'
 import SunIcon from '../../../../components/ThemeMode/SunIcon'
 
 // Styles
 import { PaperProps } from './styles'
+import AdminAvatar from './avatar'
 
 // ===========================|| ACCOUNT MENU ||=========================== //
 
@@ -33,7 +34,7 @@ export default function AccountMenu({ mode, setMode }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const menuOpen = Boolean(anchorEl);
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const menuElevation = theme.palette.mode === 'dark' && 2
+  const menuElevation = theme.palette.mode === 'dark' ? 2 : 0
   const { 
     state: { leftEdgeSidebar: { open } }, 
     toggleLeftSidebarOpen
@@ -64,7 +65,11 @@ export default function AccountMenu({ mode, setMode }) {
   }
 
   function handleOnLogout(){
-    navigate('/auth/login', { replace: true })
+    auth.logout()
+  }
+
+  function handleGoToAdminsView() {
+    navigate('/admin/dashboard')
   }
 
   function handleOnProfileClick(){
@@ -90,8 +95,14 @@ export default function AccountMenu({ mode, setMode }) {
         {/* Profile */}
         <MenuItem onClick={handleOnProfileClick}>
             <Stack direction="column" alignItems="center" sx={{ width: '100%', px: 2, py: 1 }}>
-                <Avatar sx={{ width: '56px !important', height: '56px !important', mx: '0 !important', mb: 1 }} />
-                <Typography variant="subtitle1">Full Name</Typography>
+                <Badge 
+                    color="success" 
+                    badgeContent="A"
+                    invisible={!auth.isAdmin}
+                >
+                    <Avatar sx={{ width: '56px !important', height: '56px !important', mx: '0 !important', mb: 1 }} />
+                </Badge>
+                <Typography variant="subtitle1">{ auth.user.data?.account?.name || 'Korisnik' }</Typography>
                 <Typography variant="body2" sx={{ textAlign: 'center', opacity: .8 }}>
                     Small description about <br/> user
                 </Typography>
@@ -102,12 +113,15 @@ export default function AccountMenu({ mode, setMode }) {
         <Divider />
 
         {/* Sidebar */}
-        <MenuItem sx={{ py: 1.2 }} onClick={toggleSidebarOpened}>
-            <ListItemIcon>
-                <IconLayoutSidebar />
-            </ListItemIcon>
-            {`${open ? "Hide" : "Show"} sidebar`}
-        </MenuItem>
+        {
+            !isMobile && 
+                <MenuItem sx={{ py: 1.2 }} onClick={toggleSidebarOpened}>
+                    <ListItemIcon>
+                        <IconLayoutSidebar />
+                    </ListItemIcon>
+                    {`${open ? "Hide" : "Show"} sidebar`}
+                </MenuItem>
+        }
 
         {/* Dark mode switch */}
         <MenuItem sx={{ py: 1.2 }} onClick={toggleMode}>
@@ -129,6 +143,16 @@ export default function AccountMenu({ mode, setMode }) {
         {/* Divider */}
         <Divider />
 
+        {
+            auth.isAdmin && 
+                <MenuItem onClick={handleGoToAdminsView}>
+                    <ListItemIcon>
+                        <AdminPanelSettingsOutlined />
+                    </ListItemIcon>
+                    Go to admin panel
+                </MenuItem>
+        }
+
         {/* Logout */}
         <MenuItem onClick={handleOnLogout}>
             <ListItemIcon>
@@ -143,9 +167,22 @@ export default function AccountMenu({ mode, setMode }) {
     return(
         <>
             {/* Account */}
-            <IconButton onClick={handleClick} sx={{ p: '10px' }} aria-label="search">
-                <AccountCircle />
-            </IconButton>
+            <Stack direction="row" spacing={2} alignItems="center" onClick={handleClick}>
+                <Stack>
+                    <Typography variant="subtitle1" sx={{ opacity: .85, fontWeight: 500 }}>
+                        {/* <span style={{ opacity: .75, fontWeight: 400 }}>Pozdrav, </span> */}
+                        { auth.user.data?.account?.name || 'Korisnik' }
+                    </Typography>
+                </Stack>
+                {
+                    auth.isAdmin ?
+                        <AdminAvatar>
+                            <Avatar variant="rounded" sx={{ width: 22, height: 22, borderRadius: 2 }} />
+                        </AdminAvatar>
+                        :
+                        <Avatar variant="rounded" sx={{ width: 22, height: 22, borderRadius: 2 }} />
+                }
+            </Stack>
             <Dialog
                 open={dialogOpened}
                 onClose={onClose}
@@ -163,15 +200,20 @@ export default function AccountMenu({ mode, setMode }) {
 
   return (
     <>
-        {/* Account */}
-        {/* <IconButton onClick={handleClick} sx={{ p: '10px' }} aria-label="search">
-            <AccountCircle />
-        </IconButton> */}
-        <Stack direction="row" spacing={2} alignItems="center">
-            <Avatar sx={{ width: 34, height: 34 }} />
+        <Stack direction="row" spacing={1} alignItems="center">
+            {
+                auth.isAdmin ?
+                    <AdminAvatar>
+                        <Avatar variant="rounded" sx={{ width: 28, height: 28, borderRadius: 3 }} />
+                    </AdminAvatar>
+                    :
+                    <Avatar variant="rounded" sx={{ width: 28, height: 28, borderRadius: 3 }} />
+            }
             <Stack>
-                <Typography variant="subtitle2" sx={{ mb: -.5 }}>{ auth.user.fullName }</Typography>
-                <Typography variant="caption" sx={{ opacity: .65 }}>{ auth.user.email }</Typography>
+                <Typography variant="subtitle2" sx={{ opacity: .85, fontWeight: 500 }}>
+                    <span style={{ opacity: .75, fontWeight: 400 }}>Pozdrav, </span>
+                    { auth.user.data?.account?.name || 'Korisnik' }
+                </Typography>
             </Stack>
             <IconButton onClick={handleClick}>
                 <ChevronLeftOutlined sx={{ transform: `rotate(${menuOpen ? '90deg' : '-90deg'})`, transition: '150ms ease' }} />

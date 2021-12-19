@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react'
+import { useAuth } from '../../../auth'
 
 // MUI
 import { Backdrop, CircularProgress } from '@mui/material'
 
-// React router
-import { useNavigate } from "react-router-dom";
-
 export default function Logout(){
 
-    // Variables
-    const navigate = useNavigate();
+    // Hooks
+    const auth = useAuth()
 
     // Methods
     useEffect(() => {
-        setTimeout(() => {
-            navigate('/auth/login', { replace: true })
-        }, 500);
+        auth.logout()
     }, [])
 
     return (

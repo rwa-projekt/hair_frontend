@@ -115,7 +115,7 @@ export default function NavMenu({ menu, level }){
                         }
                         secondary={
                             menu.caption && (
-                                <Typography variant="caption" className={classes.subMenuCaption} display="block" gutterBottom>
+                                <Typography variant="caption" className={classes.subMenuCaption} display="block" >
                                     {menu.caption}
                                 </Typography>
                             )

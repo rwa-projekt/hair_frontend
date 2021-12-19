@@ -1,11 +1,11 @@
-export const deploy = process.env.DEPLOY
+export const deploy = "DEV" // DEV | PRODUCTION
+export const public_url = "http://propeler.ddns.net:8005/api/"
 
 // ===========================|| ENDPOINTS ||=========================== //
 
 // Api endpoints
 export function getApiEndpoint (){
-    // DEV
     if (deploy === "DEV") {
-      return "";
+      return public_url;
     }
 };

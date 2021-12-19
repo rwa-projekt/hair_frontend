@@ -95,7 +95,7 @@ export default function NavItem ({ item, level, menuItem = false, handleClose })
                     }
                     secondary={
                         item.caption && (
-                            <Typography className={classes.subMenuCaption} variant="caption" display="block" gutterBottom>
+                            <Typography className={classes.subMenuCaption} variant="caption" display="block" >
                                 {item.caption}
                             </Typography>
                         )

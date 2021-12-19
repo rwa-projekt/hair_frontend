@@ -9,6 +9,8 @@ import { IconBrandGithub } from '@tabler/icons'
 // Illustrations
 import AboutProjectIllustration from '../../../assets/illustrations/about_project_illustration.png'
 import AboutUsIllustration from '../../../assets/illustrations/about_us_illustration.png'
+import AboutProjectIllustrationDarkMode from '../../../assets/illustrations/about_project_illustration_dark_mode.png'
+import AboutUsIllustrationDarkMode from '../../../assets/illustrations/about_us_illustration_dark_mode.png'
 
 // Components
 import SectionHeader from './components/SectionHeader'
@@ -18,6 +20,7 @@ export default function AboutUs(){
     // Variables
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const isDarkMode = theme.palette.mode === 'dark'
 
     // Styles
     const imageWidth = isMobile ? '80vw' : 480;
@@ -80,7 +83,7 @@ export default function AboutUs(){
                     </Stack>
 
                     <Box sx={{ width: imageWidth }}>
-                        <img style={{ maxWidth: imageWidth }} src={AboutProjectIllustration} />
+                        <img style={{ maxWidth: imageWidth }} src={isDarkMode ? AboutProjectIllustrationDarkMode : AboutProjectIllustration} />
                     </Box>
                 </Stack>
             </Box>
@@ -143,7 +146,7 @@ export default function AboutUs(){
                         </Stack>
                     </Stack>
                     <Box sx={{ width: imageWidth, mb: isMobile && 8 }}>
-                        <img style={{ width: imageWidth }} src={AboutUsIllustration} />
+                        <img style={{ width: imageWidth }} src={isDarkMode ? AboutUsIllustrationDarkMode : AboutUsIllustration} />
                     </Box>
                 </Stack>
             </Box>

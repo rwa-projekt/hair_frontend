@@ -43,7 +43,7 @@ export default function NavGroup ({ item }) {
             variant="caption" 
             className={classes.menuCaption} 
             display="block" 
-            gutterBottom
+            
             sx={{ 
                 width: collapsed ? "72px" : "max-content",
                 minWidth: collapsed ? "72px" : "max-content", 
@@ -58,7 +58,7 @@ export default function NavGroup ({ item }) {
                     variant="caption" 
                     className={classes.subMenuCaption} 
                     display="block" 
-                    gutterBottom
+                    
                     sx={{ 
                         width: collapsed ? "60px" : "max-content", 
                         marginLeft: collapsed && -1, 

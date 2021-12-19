@@ -1,5 +1,10 @@
-import React, { useContext, createContext, useState } from "react";
+import React, { useContext, createContext, useEffect } from "react";
 import { useLocation, Navigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
+
+// Redux
+import { useSelector, useDispatch } from 'react-redux'
+import { GET_USER, LOGIN, LOGOUT, REGISTER } from "../state/modules/user/actions";
 
 // Creating Auth Context
 let AuthContext = createContext(null);
@@ -7,30 +12,78 @@ let AuthContext = createContext(null);
 // Auth provider => returning children
 function AuthProvider({ children }) {
 
-  // Current user => TODO
-  let [user, setUser] = useState(null);
-  let [isAdmin, setIsAdmin] = useState(!true);
+  // Hooks
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const location = useLocation();
 
-  // Login
-  let login = (user, callback) => {
-    setUser(user);
-    callback();
+  // Current user
+  const user = useSelector(state => state.USER.user);
+  const isAuthenticated = !!user?.data?.token
+  const isAdmin = user?.data?.account.is_admin
+
+  // Methods
+
+  // Handling initial redirects
+  function userRedirect(){
+    navigate(location.state.from || '/dashboard')
+  }
+
+  function adminRedirect(){
+    navigate(location.state.from || '/admin/dashboard')
+  }
+
+  // Getting user
+  const getUser = async (userRedirect, adminRedirect) => {
+    let token = "";
+    try {
+      token = localStorage.getItem("token");
+    } catch (error) {
+      console.log("Error fetching token.")
+    }
+
+    dispatch({
+      type: GET_USER,
+      queryParams: { token },
+      userRedirect,
+      adminRedirect
+    });
   };
 
+  useEffect(() => {
+    getUser(userRedirect, adminRedirect)
+  }, [])
+
+
+  // Login
+  async function login(user, userCallback, adminCallback, error){
+    dispatch({
+      type: LOGIN,
+      data: user,
+      userCallback: userCallback,
+      adminCallback: adminCallback,
+      errorCallback: error,
+    });
+  };
+
+
   // Register
-  let register = (newUser, callback) => {
-    setUser(newUser);
-    callback();
+  async function register(user, callback, error){
+    dispatch({
+      type: REGISTER,
+      data: user,
+      successCallback: callback,
+      errorCallback: error,
+    });
   };
 
   // Logout
-  let logout = (callback) => {
-    setUser(null);
-    callback();
+  let logout = () => {
+    dispatch({ type: LOGOUT });
   };
 
   // Informations about user
-  let value = { user, isAdmin, login, register, logout };
+  let value = { user, isAdmin, isAuthenticated, login, register, logout };
 
   // Rendering children
   return (
@@ -52,7 +105,7 @@ function RequireAuth({ children }) {
   let auth = useAuth();
   let location = useLocation();
 
-  if (!auth.user) {
+  if (!auth.isAuthenticated) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login.
@@ -69,7 +122,7 @@ function RequireAdmin({ children }) {
   let auth = useAuth();
   let location = useLocation();
 
-  if (!auth.user || !auth.isAdmin) {
+  if (!auth.isAuthenticated || !auth.isAdmin) {
     // Redirect them to the /login page, but save the current location they were
     // trying to go to when they were redirected. This allows us to send them
     // along to that page after they login.
@@ -79,4 +132,38 @@ function RequireAdmin({ children }) {
   return children;
 }
 
-export { AuthProvider, RequireAuth, RequireAdmin, useAuth }
+// Auth guard => not allowing authorized users to access login/register pages
+function RequireUser({ children }) {
+
+  // Hooks  
+  let auth = useAuth();
+  let location = useLocation();
+
+  // Variables
+  const adminRoute = location.state?.from || '/admin/dashboard'
+  const userRoute = 
+    location.state?.from.pathname.includes('admin') ? 
+      '/dashboard' : 
+      location.state?.from || '/dashboard'
+
+  // Redirects based on users authentication and admin status
+  if (auth.isAuthenticated) {
+    if(auth.isAdmin){
+      // Redirect them to the /login page, but save the current location they were
+      // trying to go to when they were redirected. This allows us to send them
+      // along to that page after they login.
+      return <Navigate to={adminRoute} state={{ from: location }}/>;
+    }
+    else{
+      // Redirect them to the /login page, but save the current location they were
+      // trying to go to when they were redirected. This allows us to send them
+      // along to that page after they login.
+      return <Navigate to={userRoute} state={{ from: location }}/>;
+    }
+  }
+  
+
+  return children
+}
+
+export { AuthProvider, RequireAuth, RequireAdmin, RequireUser, useAuth }

@@ -16,7 +16,7 @@ const scheme = {
           collapsible: false,
           headerMagnetEnabled: false,
         },
-        sm: {
+        md: {
           variant: "persistent",
           persistentBehavior: "fit",
           width: 256,

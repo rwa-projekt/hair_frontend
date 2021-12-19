@@ -51,13 +51,13 @@ const more = {
                     url: '/user/me/change-password',
                     target: true
                 },
-                {
-                    id: 'logout',
-                    title: 'Logout',
-                    type: 'item',
-                    url: '/auth/logout',
-                    target: true
-                },
+                // {
+                //     id: 'shifts',
+                //     title: 'Shifts',
+                //     type: 'item',
+                //     url: '/user/me/shifts',
+                //     target: true
+                // },
             ]
         }
     ]

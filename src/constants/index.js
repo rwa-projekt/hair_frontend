@@ -8,3 +8,8 @@ export const FORM_VALIDATIONS = {
         message: "Invalid e-mail address."
     }
 }
+
+export const SNACKBAR_ALERTS = {
+    login_error: 'Dogodila se greška prilikom prijave',
+    register_error: 'Dogodila se greška prilikom stvaranja računa'
+}
