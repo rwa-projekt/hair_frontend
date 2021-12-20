@@ -1,5 +1,5 @@
 export const deploy = "DEV" // DEV | PRODUCTION
-export const public_url = "http://propeler.ddns.net:8005/api/"
+export const public_url = "https://rwa-barberbooking.tk/api/"
 
 // ===========================|| ENDPOINTS ||=========================== //
 
