@@ -14,6 +14,10 @@ import {
   watcher_getUser
 } from "./modules/user";
 
+import {
+  watcher_getHairstyles
+} from "./modules/hairstyles";
+
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
 // Saga middleware
@@ -32,10 +36,13 @@ const createStoreWithFirebase = compose(
 const store = createStoreWithFirebase(Reducers);
 
 // Running auth watchers
+//? User
 sagaMiddleware.run(watcher_login);
 sagaMiddleware.run(watcher_logout);
 sagaMiddleware.run(watcher_register);
 sagaMiddleware.run(watcher_getUser);
+//?
+sagaMiddleware.run(watcher_getHairstyles);
 
 // Persister
 const persister = 'RWA';

@@ -8,7 +8,7 @@ import { TextField, InputAdornment, IconButton } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function FormInputText ({ name, control, label, type = "text", textFieldProps }) {
+export default function FormInputText ({ name, control, label, type = "text", endAdornment, placeholder = "", textFieldProps }) {
 
   // Variables
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -39,9 +39,10 @@ export default function FormInputText ({ name, control, label, type = "text", te
           fullWidth
           label={label}
           variant="outlined"
+          placeholder={placeholder}
           type={passwordVisible ? 'text' : type}
           InputProps={{
-            endAdornment: type === 'password' &&
+            endAdornment: endAdornment ? endAdornment : type === 'password' &&
             <InputAdornment position="end">
               <IconButton
                 aria-label="Toggle password visibility"

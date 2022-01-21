@@ -51,12 +51,12 @@ export default function useCustomTheme(){
             // },
             secondary:{
               main: '#DF6D73',
-              light: isLight ? '#FCEFF0' : '#643739'
+              light: isLight ? '#FCEFF0' : '#643739',
             },
-            success: {
-              main: '#44b700',
-              contrastText: '#fff'
-            }
+            // success: {
+            //   // main: '#44b700',
+            //   contrastText: '#fff'
+            // }
           },
           typography: {
               fontFamily: `"Poppins", "Helvetica", "Arial", sans-serif`,

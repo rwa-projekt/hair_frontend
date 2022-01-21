@@ -1,5 +1,5 @@
 export const deploy = "DEV" // DEV | PRODUCTION
-export const public_url = "https://rwa-barberbooking.tk/api/"
+export const public_url = "http://ss-docker.sumit.sum.ba:5555/api/"
 
 // ===========================|| ENDPOINTS ||=========================== //
 

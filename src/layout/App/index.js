@@ -86,7 +86,7 @@ export default function AppLayout(){
 
       {/* Content */}
       <Content>
-        <Container maxWidth="xl" sx={{ pt: isMobile ? 2 : 6 }}>
+        <Container maxWidth="lg" sx={{ pt: isMobile ? 2 : 6 }}>
           <Outlet />
         </Container>
         <div style={{ minHeight: 40 }} />

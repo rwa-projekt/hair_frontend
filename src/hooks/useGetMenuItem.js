@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'
 
 // Menu Items
-import menuItems from '../menu-items'
+import menuItems from '../menu-items/App'
+import adminMenuItems from '../menu-items/Admin'
 
 export default function useGetMenuItem() {
 
@@ -22,3 +23,25 @@ export default function useGetMenuItem() {
     
     return menuItem;
 };
+
+
+function useGetAdminMenuItem() {
+
+    // Variables
+    const location = useLocation()
+    const [menuItem, setMenuItem] = useState({})
+
+    // Methods
+    useEffect(() => {
+        adminMenuItems.items[0].children.forEach(page => {
+            let _item = location.pathname.includes(page.url)
+            if(_item){
+                setMenuItem(page)
+            }
+        })
+    }, [location])
+    
+    return menuItem;
+};
+
+export { useGetAdminMenuItem }

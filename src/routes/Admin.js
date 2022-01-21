@@ -9,6 +9,10 @@ import AdminLayout from '../layout/Admin/index';
 // App views
 const NotFound = loadable(() => import('./fallback-routes/404'));
 const Dashboard = loadable(() => import('../views/Admin/Dashboard'));
+const Hairstyles = loadable(() => import('../views/Admin/Hairstyles'));
+const Form = loadable(() => import('../views/Admin/Hairstyles/views/Form'));
+const Empty = loadable(() => import('../views/Admin/Hairstyles/views/Empty'));
+
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -37,6 +41,20 @@ const AdminRoutes = {
                 {
                     path: 'dashboard',
                     element: <Dashboard/>
+                },
+                {
+                    path: 'hairstyles',
+                    element: <Hairstyles/>,
+                    children: [
+                        {
+                            path: '*',
+                            element: <Form />
+                        },
+                        {
+                            path: '',
+                            element: <Empty />
+                        },
+                    ]
                 }
             ]
         },

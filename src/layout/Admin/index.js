@@ -4,11 +4,17 @@ import { Outlet } from 'react-router-dom'
 // MUI
 import { Container } from '@mui/material'
 
+// Components
+import Sidebar from './Sidebar'
+
 export default function Admin(){
     return(
         <div style={{ width: '100vw', height: '100vh', display: 'flex', flexDirection: 'row'}}>
-            <div style={{ width: 80, height: '100%', backgroundColor: '#434343' }} />
-            <Container maxWidth="xl" sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+            {/* Sidebar */}
+            <Sidebar />
+
+            {/* Rendering components */}
+            <Container maxWidth="xxxl" sx={{ p: '0 !important' }}>
                 <Outlet />
             </Container>
         </div>

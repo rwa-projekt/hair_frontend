@@ -4,6 +4,13 @@ a {
     text-decoration: inherit; /* no underline */
 }
 
+* {
+    -webkit-user-select: unset !important;
+    -moz-user-select: unset !important;
+    -ms-user-select: unset !important;
+    user-select: unset !important;
+}
+
 .ScrollbarsCustom-Track.ScrollbarsCustom-TrackY,
 .ScrollbarsCustom-Thumb.ScrollbarsCustom-ThumbY{
     width: 0px !important;

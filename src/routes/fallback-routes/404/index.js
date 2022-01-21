@@ -30,6 +30,9 @@ export default function PageNotFound() {
       if(location.pathname.includes('website')){
         navigate('/website/home')
       }
+      else if(location.pathname.includes('admin')){
+        navigate('/admin/dashboard')
+      }
       else{
         navigate('/dashboard')
       }

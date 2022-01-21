@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 // MUI
@@ -13,6 +13,7 @@ import animationData from '../../assets/lottie/page_not_found.json';
 export default function PageNotFound() {
 
     // Variables
+    const location = useLocation()
     const mode = useSelector(state => state.UI.mode)
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -28,6 +29,9 @@ export default function PageNotFound() {
     
     // Methods
     function handleOnClick() {
+      if(location.pathname.includes('admin'))
+        navigate('/admin/dashboard')
+      else
         navigate('/dashboard')
     }
     

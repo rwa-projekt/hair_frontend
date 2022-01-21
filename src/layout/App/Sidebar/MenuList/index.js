@@ -5,7 +5,7 @@ import { Typography } from '@mui/material';
 
 // Components
 import NavGroup from './NavGroup';
-import menuItem from '../../../../menu-items'
+import menuItem from '../../../../menu-items/App'
 
 // ===========================|| SIDEBAR MENU LIST ||=========================== //
 

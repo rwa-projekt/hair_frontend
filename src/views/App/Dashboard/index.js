@@ -6,17 +6,18 @@ import { Grid } from '@mui/material'
 // Components
 import PageTitle from '../../../components/PageTitle'
 import Banner from './components/Banner'
+import Hairstyles from './components/Hairstyles'
 
 export default function Dashboard(){
     return(
         <div>
             <PageTitle />
             <Grid container spacing={4}>
-                <Grid item md={12} lg={8}>
+                <Grid item xs={12}>
                     <Banner />
                 </Grid>
-                <Grid item md={12} lg={4}>
-                    Nešto
+                <Grid item xs={12}>
+                    {/* <Hairstyles /> */}
                 </Grid>
             </Grid>
             
