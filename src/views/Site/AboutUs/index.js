@@ -11,6 +11,8 @@ import AboutProjectIllustration from '../../../assets/illustrations/about_projec
 import AboutUsIllustration from '../../../assets/illustrations/about_us_illustration.png'
 import AboutProjectIllustrationDarkMode from '../../../assets/illustrations/about_project_illustration_dark_mode.png'
 import AboutUsIllustrationDarkMode from '../../../assets/illustrations/about_us_illustration_dark_mode.png'
+import Diagram from '../../../assets/illustrations/diagram.png'
+import DiagramDarkMode from '../../../assets/illustrations/diagram_dark_mode.png'
 
 // Components
 import SectionHeader from './components/SectionHeader'
@@ -44,7 +46,11 @@ export default function AboutUs(){
             }}
         >
 
-            <Box>
+            <Stack
+                direction="column"
+                alignItems="center"
+                spacing={8}
+            >
                 <SectionHeader 
                     title="O projektu"
                     subtitle="Općenito o projektu te korištene tehnologije"
@@ -85,8 +91,11 @@ export default function AboutUs(){
                     <Box sx={{ width: imageWidth }}>
                         <img style={{ maxWidth: imageWidth }} src={isDarkMode ? AboutProjectIllustrationDarkMode : AboutProjectIllustration} />
                     </Box>
+
                 </Stack>
-            </Box>
+
+                <img style={{ maxWidth: isMobile ? '100%' : '720px' }} src={isDarkMode ? DiagramDarkMode : Diagram} />
+            </Stack>
 
             <Box>
                 <SectionHeader 
