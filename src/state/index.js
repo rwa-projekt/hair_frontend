@@ -28,8 +28,8 @@ const middlewares = [thunk];
 
 // Creating store
 const createStoreWithFirebase = compose(
-  applyMiddleware(...middlewares, sagaMiddleware),
-  composeWithDevTools()
+  applyMiddleware(...middlewares, sagaMiddleware)
+  // composeWithDevTools()
 )(createStore);
 
 // Store

@@ -1,1 +1,0 @@
-{"version":3,"sources":["views/App/Profile/components/General/index.js"],"names":["General"],"mappings":"mHAAA,+DAEe,SAASA,IACpB,OACI","file":"static/js/19.076f965b.chunk.js","sourcesContent":["import React from 'react'\n\nexport default function General(){\n    return(\n        <div>\n            General\n        </div>\n    )\n}"],"sourceRoot":""}
