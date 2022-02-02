@@ -24,7 +24,8 @@ export default function AdminDrawer({ loading = false, children }){
 
     return(
         <ThemeProvider theme={darkTheme}>
-            <Box 
+            <Box
+                id="admin-drawer"
                 sx={{ 
                     width: 480, 
                     height: '100vh', 
@@ -32,7 +33,6 @@ export default function AdminDrawer({ loading = false, children }){
                     position: 'relative'
                 }}
             >
-                {/* Loader */}
                 {
                     loading && 
                         <LinearProgress color='secondary' sx={{ position: 'absolute', top: 0, left: 0, width: '100%' }} />

@@ -7,6 +7,8 @@ import { Box, Stack, Typography, Chip, LinearProgress } from '@mui/material'
 
 // Components
 import PageTitle from '../../../components/PageTitle'
+import Card from './components/ServiceCard';
+
 
 // Icons
 import { GET_HAIRSTYLES } from '../../../state/modules/hairstyles/actions'
@@ -57,15 +59,17 @@ export default function Hairstyles(){
               hairstyles.status === 'loading' ? 
                 <LinearProgress />
                 :
-                <Box sx={{ width: '100%' }}>
+                <Stack 
+                    direction="row" 
+                    flexWrap="wrap"
+                    sx={{ width: '100%' }} 
+                >
                     {
                         hairstyles.data.map((item, index) => (
-                            <Typography key={index} variant="subtitle1">
-                                { item.name }
-                            </Typography>
+                            <Card item={item} key={index} />
                         ))
                     }
-                </Box>
+                </Stack>
             }
         </div>
     )

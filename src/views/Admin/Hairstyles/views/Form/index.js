@@ -277,7 +277,7 @@ export default function Form() {
 								loading
 								loadingPosition="start"
 								startIcon={<SaveIcon />}
-								variant="outlined"
+								variant="text"
 								sx={{ textTransform: 'none' }} 
 							>
 								Brisanje...
@@ -286,7 +286,7 @@ export default function Form() {
 							<Button
 								onClick={onDelete}
 								sx={{ textTransform: 'none' }} 
-								variant="outlined" 
+								variant="text" 
 								inputMode="submit"
 								color="secondary"
 								disabled={!formState.isValid}

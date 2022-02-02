@@ -1,15 +1,12 @@
 import React from "react";
 import {  useNavigate } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
 
 // MUI
 import { Stack, Typography, Box, Button, Avatar, CircularProgress } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
 // Icons
-import EmptyIcon from '../../../../../assets/illustrations/empty_notes.png';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { IconCut, IconPlus } from '@tabler/icons';
+import { IconPlus, IconUser } from '@tabler/icons';
 
 
 export default function Empty() {
@@ -18,7 +15,10 @@ export default function Empty() {
 	const navigate = useNavigate()
 
 	// Variables
-    const hairstyles = useSelector(state => state.HAIRSTYLES.hairstyles)
+    const workers = {
+		status: '',
+		data: []
+	}
 
 	// Methods
     function handleAddService() {
@@ -26,7 +26,7 @@ export default function Empty() {
     }
 
 	function handleOnItemClick(item){
-		navigate(`/admin/hairstyles/${item.id}`, { state: { update: true } })
+		navigate(`/admin/workers/${item.id}`, { state: { update: true } })
 	}
 
 	return (
@@ -36,8 +36,6 @@ export default function Empty() {
 			sx={{ width: '100%' }}
 		>
 			<Stack direction="column" alignItems="flex-start" justifyContent="flex-start" spacing={2}>
-
-				{/* <img src={EmptyIcon} style={{ width: 400 }} /> */}
 
 				<Stack direction="row" spacing={4}>
 					<Stack
@@ -52,19 +50,19 @@ export default function Empty() {
 									width: 40, height: 40, 
 									display: 'grid', 
 									placeItems: 'center', 
-									borderRadius: 2,
+									borderRadius: 2, 
 									mb: 2 
 								}}
 							>
-								<IconCut size="1.5em" color="#fff" />
+								<IconUser size="1.5em" color="#fff" />
 							</Box>
 
 							<Typography variant="h6" sx={{ opacity: .75 }}>
-								Usluge šišanja (
+								Korisnici (
 									{
-										hairstyles.status === 'loading' ? 
+										workers.status === 'loading' ? 
 											"..." :
-											hairstyles.data.length
+											workers.data.length
 									}
 								)
 							</Typography>
@@ -72,7 +70,7 @@ export default function Empty() {
 						
 
 						<Typography	variant="subtitle2" sx={{ opacity: .75  }}>
-							Broj dodanih usluga za šišanje i uređivanje kose i brade
+							Broj korisnika koji upravljaju ovom aplikacijom
 						</Typography>
 					</Stack>
 
@@ -97,15 +95,15 @@ export default function Empty() {
 
 			<Stack direction="column" spacing={4}>
 				<Typography variant="h6">
-					Dodane usluge
+					Dodani korisnici
 				</Typography>
 
 				{
-					hairstyles.status === 'loading' ? <CircularProgress /> :
-						hairstyles.data.length ?
-						<div style={{ height: `calc(${hairstyles.data.length + 2} * 52px + 8px)`, width: '100%' }}>
+					workers.status === 'loading' ? <CircularProgress /> :
+						workers.data.length ?
+						<div style={{ height: `calc(${workers.data.length + 2} * 52px + 8px)`, width: '100%' }}>
 							<DataGrid
-								rows={hairstyles.data}
+								rows={workers.data}
 								columns={columns}
 								pageSize={9}
 								rowsPerPageOptions={[9]}
@@ -116,7 +114,7 @@ export default function Empty() {
 						</div>
 						:
 						<Typography variant="subtitle2" sx={{ fontWeight: 300 }}>
-							Trenutno nema dodanih usluga
+							Trenutno nema dodanih korisnika
 						</Typography>
 
 				}
@@ -131,35 +129,31 @@ export default function Empty() {
 
 
 const columns = [
-	{ field: 'id', headerName: 'ID', width: 80 },
-	{ 
-		field: 'avatar', 
-		headerName: 'Photo', 
-		width: 100 ,
-		renderCell: (params) => (
-			<Avatar
-			src={params.row.avatar}
-			sx={{ 
-				width: '36px !important', 
-				height: '36px !important' 
-			}} 
-			/>
-		),
-	},
-	{
-		field: 'price',
-		headerName: 'Cijena',
-		width: 160,
-		//   Adding sufix
-		renderCell: params => `${params.row.price} KM`
-	},
-	{
-		field: 'time_needed',
-		headerName: 'Vrijeme potrebno',
-		width: 160,
-		//   Adding sufix
-		renderCell: params => `${params.row.time_needed} min.`
-	},
+    { field: 'id', headerName: 'ID', width: 80 },
+    { 
+      field: 'avatar', 
+      headerName: 'Photo', 
+      width: 100 ,
+      renderCell: (params) => (
+          <Avatar
+		  	src={params.row.avatar}
+            sx={{ 
+              width: '36px !important', 
+              height: '36px !important' 
+            }} 
+          />
+      ),
+    },
+    {
+      field: 'price',
+      headerName: 'Cijena',
+      width: 160,
+    },
+    {
+      field: 'time_needed',
+      headerName: 'Vrijeme potrebno',
+      width: 160,
+    },
 	{
 		field: 'name',
 		headerName: 'Ime',

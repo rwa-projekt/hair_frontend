@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Outlet, useNavigate, useLocation } from 'react-router-dom'
-import { GET_HAIRSTYLES } from '../../../state/modules/hairstyles/actions'
 
 // MUI
 import { Stack, Typography, Tabs, Tab, Box, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Container, IconButton, CircularProgress, Snackbar } from '@mui/material'
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import { IconCut, IconListSearch } from '@tabler/icons';
+import { IconUser } from '@tabler/icons';
 
 // Components
 import Drawer from '../../../components/AdminDrawer'
@@ -22,32 +21,30 @@ export default function Hairstyles(){
     const location = useLocation()
 
     // Variables
-    const hairstyles = useSelector(state => state.HAIRSTYLES.hairstyles)
-    const [value, setValue] = useState(0);
+    const workers = {
+        status: '',
+        data: []
+    }
+    const [value, setValue] =useState(0);
     const [search, setSearch] = useState("")
 
     // Data
     const data = useMemo(() => (
-        hairstyles.data.filter(element => element.name.includes(search))
-    ), [search, hairstyles])
+        workers.data.filter(element => element.name.includes(search))
+    ), [search, workers])
 
     // Methods
-    useEffect(() => {
-        dispatch({
-            type: GET_HAIRSTYLES
-        })
-    }, [])
-
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
 
     function handleAddService() {
         navigate('add', { state: { update: false } })
     }
 
     function handleOnServiceClick(id) {
-        navigate(`/admin/hairstyles/${id}`, { state: { update: true } })
+        navigate(`/admin/workers/${id}`, { state: { update: true } })
     }
 
     function handleSearch(event){
@@ -57,7 +54,7 @@ export default function Hairstyles(){
     return(
         <Stack direction="row">
             {/* Drawer */}
-            <Drawer loading={hairstyles.status === 'loading'}>
+            <Drawer loading={workers.status === 'loading'}>
                 <Stack
                     direction="column"
                     justifyContent="stretch"
@@ -70,7 +67,7 @@ export default function Hairstyles(){
                     >
                         {/* Title */}
                         <Typography variant="h6" sx={{ color: "#fff" }}>
-                            Usluge
+                            Korisnici
                         </Typography>
 
                         {/* Add service */}
@@ -80,7 +77,7 @@ export default function Hairstyles(){
                     </Stack>
 
                     {/* Search input */}
-                    <Input onChange={handleSearch} placeholder="Pretražite..." />
+                    <Input  onChange={handleSearch} placeholder="Pretražite..." />
 
                     {/* Tabs */}
                     <Box sx={{ width: '100%' }}>
@@ -94,7 +91,8 @@ export default function Hairstyles(){
                                 onChange={handleChange}
                             >
                                 {/* Tab */}
-                                <Tab label="Sve" sx={{ textTransform: 'none' }}/>
+                                <Tab label="Svi" sx={{ textTransform: 'none' }}/>
+                                <Tab label="Neki zanimljivi" sx={{ textTransform: 'none' }}/>
                             </Tabs>
                         </Box>
 
@@ -102,82 +100,85 @@ export default function Hairstyles(){
                         {/* All services */}
                         <TabPanel value={value} index={0}>
                             {
-                                hairstyles.status === 'loading' ? 
+                                workers.status === 'loading' ? 
                                 <Box sx={{ width: '100%', height: 400, display: 'grid', placeItems: 'center' }}>
                                     <CircularProgress color="secondary" />
                                 </Box>
                                 :
                                 <List>
-                                    {
-                                        hairstyles.data.length ?
-                                            data.length ?
-                                                data.map((item, index) => (
-                                                    <ListItem 
-                                                        key={index} 
-                                                        disablePadding 
-                                                        selected={item.id == location.pathname.split('/').at(-1)}
+                                {
+                                    workers.data.length ?
+                                        data.length ?
+                                            data.map((item, index) => (
+                                                <ListItem 
+                                                    key={index} 
+                                                    disablePadding 
+                                                    selected={item.id == location.pathname.split('/').at(-1)}
+                                                    sx={{ borderRadius: 2 }}
+                                                >
+                                                    {/* Button */}
+                                                    <ListItemButton 
+                                                        onClick={() => handleOnServiceClick(item.id)} 
                                                         sx={{ borderRadius: 2 }}
                                                     >
-                                                        {/* Button */}
-                                                        <ListItemButton 
-                                                            onClick={() => handleOnServiceClick(item.id)} 
-                                                            sx={{ borderRadius: 2 }}
-                                                        >
 
-                                                            {/* Service icon */}
-                                                            <ListItemIcon sx={{ mr: -2, opacity: .7 }}>
-                                                                <IconCut size="1.125em" />
-                                                            </ListItemIcon>
+                                                        {/* Service icon */}
+                                                        <ListItemIcon sx={{ mr: -2, opacity: .7 }}>
+                                                            <IconCut size="1.125em" />
+                                                        </ListItemIcon>
 
-                                                            {/* Service name */}
-                                                            <ListItemText 
-                                                                primary={item.name}
-                                                                sx={{ color: "#fff", opacity: .7, py: 1, pt: 1.1 }}
-                                                            />
-                                                        </ListItemButton>
-                                                    </ListItem>
-                                                ))
-                                                :
-                                                <Box sx={{ width: '100%', height: 400, display: 'grid', placeItems: 'center' }}>
-                                                    <Stack direction="column" alignItems="center" spacing={1}>
-                                                        <Typography variant="h6" sx={{ color: "#fff" }}>
-                                                            Pretraga
-                                                        </Typography>
-
-                                                        <Typography 
-                                                            variant="caption" 
-                                                            sx={{ color: "#fff", opacity: .75, maxWidth: 200, textAlign: 'center', wordBreak: 'break-all' }}
-                                                        >
-                                                            Nažalost ne postoji usluga: "{ search }" 
-                                                        </Typography>
-                                                        
-                                                        <IconListSearch style={{ color: "#fff" }} />
-                                                    </Stack>
-                                                </Box>
+                                                        {/* Service name */}
+                                                        <ListItemText 
+                                                            primary={item.name}
+                                                            sx={{ color: "#fff", opacity: .7, py: 1, pt: 1.1 }}
+                                                        />
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            ))
                                             :
                                             <Box sx={{ width: '100%', height: 400, display: 'grid', placeItems: 'center' }}>
                                                 <Stack direction="column" alignItems="center" spacing={1}>
                                                     <Typography variant="h6" sx={{ color: "#fff" }}>
-                                                        Dodajte uslugu
+                                                        Pretraga
                                                     </Typography>
 
                                                     <Typography 
                                                         variant="caption" 
-                                                        sx={{ color: "#fff", opacity: .75, maxWidth: 200, textAlign: 'center' }}
+                                                        sx={{ color: "#fff", opacity: .75, maxWidth: 200, textAlign: 'center', wordBreak: 'break-all' }}
                                                     >
-                                                        Trenutno nemate niti jednu dodanu uslugu
+                                                        Nažalost ne postoji korisnik: "{ search }" 
                                                     </Typography>
                                                     
-                                                    {/* Add service */}
-                                                    <IconButton onClick={handleAddService}>
-                                                        <AddRoundedIcon />
-                                                    </IconButton>
+                                                    <IconListSearch style={{ color: "#fff" }} />
                                                 </Stack>
                                             </Box>
-                                    }
+                                        :
+                                        <Box sx={{ width: '100%', height: 400, display: 'grid', placeItems: 'center' }}>
+                                            <Stack direction="column" alignItems="center" spacing={1}>
+                                                <Typography variant="h6" sx={{ color: "#fff" }}>
+                                                    Dodajte uslugu
+                                                </Typography>
+
+                                                <Typography 
+                                                    variant="caption" 
+                                                    sx={{ color: "#fff", opacity: .75, maxWidth: 200, textAlign: 'center' }}
+                                                >
+                                                    Trenutno nemate niti jednu dodanu uslugu
+                                                </Typography>
+                                                
+                                                {/* Add service */}
+                                                <IconButton onClick={handleAddService}>
+                                                    <AddRoundedIcon />
+                                                </IconButton>
+                                            </Stack>
+                                        </Box>
+                                }
                                 </List>
                             }
                         </TabPanel>
+
+
+                        <TabPanel value={value} index={1}></TabPanel>
 
                     </Box>
                 </Stack>

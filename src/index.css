@@ -11,6 +11,22 @@ a {
     user-select: unset !important;
 }
 
+.custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+   
+.custom-scrollbar::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px #aeaeae;
+}
+   
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #aaaaaa;
+}
+
+#admin-drawer .MuiListItem-root.MuiListItem-gutters.Mui-selected{
+    background-color: #DF6D7350;
+}
+
 .ScrollbarsCustom-Track.ScrollbarsCustom-TrackY,
 .ScrollbarsCustom-Thumb.ScrollbarsCustom-ThumbY{
     width: 0px !important;

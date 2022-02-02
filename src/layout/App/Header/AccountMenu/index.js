@@ -200,25 +200,27 @@ export default function AccountMenu({ mode, setMode }) {
 
   return (
     <>
-        <Stack direction="row" spacing={1} alignItems="center">
-            {
-                auth.isAdmin ?
-                    <AdminAvatar>
+        <Box onClick={handleClick} sx={{ cursor: 'pointer' }}>
+            <Stack direction="row" spacing={1} alignItems="center">
+                {
+                    auth.isAdmin ?
+                        <AdminAvatar>
+                            <Avatar variant="rounded" sx={{ width: 28, height: 28, borderRadius: 3 }} />
+                        </AdminAvatar>
+                        :
                         <Avatar variant="rounded" sx={{ width: 28, height: 28, borderRadius: 3 }} />
-                    </AdminAvatar>
-                    :
-                    <Avatar variant="rounded" sx={{ width: 28, height: 28, borderRadius: 3 }} />
-            }
-            <Stack>
-                <Typography variant="subtitle2" sx={{ opacity: .85, fontWeight: 500 }}>
-                    <span style={{ opacity: .75, fontWeight: 400 }}>Pozdrav, </span>
-                    { auth.user.data?.account?.name || 'Korisnik' }
-                </Typography>
+                }
+                <Stack>
+                    <Typography variant="subtitle2" sx={{ opacity: .85, fontWeight: 500 }}>
+                        <span style={{ opacity: .75, fontWeight: 400 }}>Pozdrav, </span>
+                        { auth.user.data?.account?.name || 'Korisnik' }
+                    </Typography>
+                </Stack>
+                <IconButton>
+                    <ChevronLeftOutlined sx={{ transform: `rotate(${menuOpen ? '90deg' : '-90deg'})`, transition: '150ms ease' }} />
+                </IconButton>
             </Stack>
-            <IconButton onClick={handleClick}>
-                <ChevronLeftOutlined sx={{ transform: `rotate(${menuOpen ? '90deg' : '-90deg'})`, transition: '150ms ease' }} />
-            </IconButton>
-        </Stack>
+        </Box>
 
         <Menu
             anchorEl={anchorEl}

@@ -48,11 +48,25 @@ const pages = {
         },
         {
             id: 'workers',
-            title: 'Workers',
+            title: 'Korisnici',
             type: 'item',
             url: 'admin/workers',
             icon: icons.IconUsers,
-            breadcrumbs: true
+            breadcrumbs: true,
+            children: [
+                {
+                    path: '',
+                    name: 'Korisnici',
+                },
+                {
+                    path: 'add',
+                    name: 'Dodavanje',
+                },
+                {
+                    path: '*',
+                    name: 'Uređivanje',
+                }
+            ]
         },
     ]
 };

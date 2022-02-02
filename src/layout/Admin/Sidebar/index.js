@@ -20,6 +20,11 @@ export default function Sidebar () {
     const { pathname } = useLocation();
     const navigate = useNavigate()
 
+    // Methods
+    function handleNavigateToDashboard(){
+        navigate('/admin/dashboard')
+    }
+
     // Content
     const navigation = 
         menuItems.items[0].children.map((item, index) => {
@@ -67,7 +72,14 @@ export default function Sidebar () {
         >
 
             {/* Logo icon */}
-            <IconButton size="medium" sx={{ backgroundColor: "secondary.main" }}>
+            <IconButton
+                onClick={handleNavigateToDashboard}
+                size="medium" 
+                sx={{ 
+                    bgcolor: "secondary.main",
+                    '&:hover': { bgcolor: '#DF6D73aa' } 
+                }}
+            >
                 <IconBrandTabler/>
             </IconButton>
 
