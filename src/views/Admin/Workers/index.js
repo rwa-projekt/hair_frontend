@@ -91,8 +91,8 @@ export default function Hairstyles(){
                                 onChange={handleChange}
                             >
                                 {/* Tab */}
-                                <Tab label="Svi" sx={{ textTransform: 'none' }}/>
-                                <Tab label="Neki zanimljivi" sx={{ textTransform: 'none' }}/>
+                                <Tab label="Frizeri" sx={{ textTransform: 'none' }}/>
+                                <Tab label="Admini" sx={{ textTransform: 'none' }}/>
                             </Tabs>
                         </Box>
 
@@ -156,14 +156,14 @@ export default function Hairstyles(){
                                         <Box sx={{ width: '100%', height: 400, display: 'grid', placeItems: 'center' }}>
                                             <Stack direction="column" alignItems="center" spacing={1}>
                                                 <Typography variant="h6" sx={{ color: "#fff" }}>
-                                                    Dodajte uslugu
+                                                    Dodajte korisnika
                                                 </Typography>
 
                                                 <Typography 
                                                     variant="caption" 
                                                     sx={{ color: "#fff", opacity: .75, maxWidth: 200, textAlign: 'center' }}
                                                 >
-                                                    Trenutno nemate niti jednu dodanu uslugu
+                                                    Trenutno nije dodan niti jedan korisnik
                                                 </Typography>
                                                 
                                                 {/* Add service */}

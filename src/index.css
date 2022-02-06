@@ -13,7 +13,7 @@ a {
 
 .custom-scrollbar::-webkit-scrollbar {
     width: 2px;
-  }
+}
    
 .custom-scrollbar::-webkit-scrollbar-track {
     box-shadow: inset 0 0 2px #aeaeae;
@@ -25,6 +25,14 @@ a {
 
 #admin-drawer .MuiListItem-root.MuiListItem-gutters.Mui-selected{
     background-color: #DF6D7350;
+}
+
+#appointments-barbers .MuiChip-root, #appointments-services .MuiChip-root{
+    border: 1px solid transparent !important;
+}
+
+.PrivateDatePickerToolbar-penIcon{
+    display: none !important;
 }
 
 .ScrollbarsCustom-Track.ScrollbarsCustom-TrackY,

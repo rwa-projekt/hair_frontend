@@ -28,7 +28,7 @@ export default function Hairstyles(){
 
     // Data
     const data = useMemo(() => (
-        hairstyles.data.filter(element => element.name.includes(search))
+        hairstyles.data.filter(element => element.name.toLowerCase().includes(search.toLowerCase()))
     ), [search, hairstyles])
 
     // Methods
