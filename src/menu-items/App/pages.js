@@ -8,12 +8,12 @@ const icons = { IconKey, IconHandStop, IconDashboard, IconCalendarTime };
 
 const pages = {
     id: 'pages',
-    title: 'Pages',
+    title: 'Stranice',
     type: 'group',
     children: [
         {
             id: 'dashboard',
-            title: 'Dashboard',
+            title: 'Početna',
             type: 'item',
             url: '/dashboard',
             icon: icons.IconDashboard,
@@ -21,7 +21,7 @@ const pages = {
         },
         {
             id: 'appointments',
-            title: 'Appointments',
+            title: 'Rezervacije',
             type: 'item',
             url: '/appointments',
             icon: icons.IconCalendarTime,
@@ -29,7 +29,7 @@ const pages = {
         },
         {
             id: 'website',
-            title: 'Website',
+            title: 'Web stranica',
             type: 'item',
             url: '/website',
             icon: icons.IconHandStop,

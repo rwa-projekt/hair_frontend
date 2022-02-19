@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ChangePassword(){
+export default function Shifts(){
     return(
         <div>
-            Change Password
+            Smjene
         </div>
     )
 }

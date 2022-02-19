@@ -1,3 +1,5 @@
+import React from 'react'
+
 // assets
 import { IconHistory, IconAdjustmentsHorizontal, IconUser } from '@tabler/icons';
 
@@ -12,12 +14,12 @@ const icons = {
 
 const more = {
     id: 'more',
-    title: 'More',
+    title: 'Dodatno',
     type: 'group',
     children: [
         {
             id: 'history',
-            title: 'History',
+            title: 'Povijest',
             type: 'item',
             url: '/history',
             icon: icons.IconHistory,
@@ -31,7 +33,7 @@ const more = {
         },
         {
             id: 'user',
-            title: 'User',
+            title: 'Korisnik',
             type: 'collapse',
             url: '/user', // For breadcrumbs
             icon: icons.IconUser,
@@ -39,25 +41,18 @@ const more = {
             children: [
                 {
                     id: 'user-profile',
-                    title: 'Visit profile',
+                    title: 'Osnovno',
                     type: 'item',
                     url: '/user/me/general',
                     target: true
                 },
                 {
-                    id: 'change-password',
-                    title: 'Change password',
+                    id: 'shifts',
+                    title: 'Smjene',
                     type: 'item',
-                    url: '/user/me/change-password',
+                    url: '/user/me/shifts',
                     target: true
                 },
-                // {
-                //     id: 'shifts',
-                //     title: 'Shifts',
-                //     type: 'item',
-                //     url: '/user/me/shifts',
-                //     target: true
-                // },
             ]
         }
     ]

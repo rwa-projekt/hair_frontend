@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { GET_HAIRSTYLES } from '../../../../../state/modules/hairstyles/actions';
+import { useIsLaptop } from '../../../../../hooks/useDevice';
 
 // Context
 import { useAppointments } from '../../index'
 
 // MUI
-import { CircularProgress, Stack, Chip, Avatar, Typography } from '@mui/material';
+import { CircularProgress, Stack, Box, Chip, Avatar, Typography } from '@mui/material';
+
+// Components
+import ScrollView from '../../../../../components/ScrollView'
 
 export default function Services(){
 
     // Variables
+    const smallScreen = useIsLaptop()
     const dispatch = useDispatch()
     const hairstyles = useSelector(state => state.HAIRSTYLES.hairstyles)
     const { setService, serviceSelected } = useAppointments()
@@ -25,22 +30,34 @@ export default function Services(){
     }
 
     return(
-        <div id="appointments-services">
-            <Stack direction="row" spacing={2}>                
+        <div id="appointments-services" style={{ width: '100%' }}>
+            <Box sx={{ width: '100%' }}>
                 {
-                    hairstyles.data.map((item, index) => {
-                        const selected = serviceSelected(item.id) 
-                        return (
-                            <Card
-                                key={index}
-                                item={item}
-                                selected={selected}
-                                onClick={() => setService(item)}
-                            />
-                        )
-                    })
+                    smallScreen &&
+                        <>
+                            <Box sx={{ height: 12 }} />
+                            <Typography variant="caption" sx={{ height: 40, pl: 1 }}>Usluge</Typography>
+                            <Box sx={{ height: 12 }} />
+                        </>
                 }
-            </Stack>
+                <ScrollView>               
+                    {
+                        hairstyles.data.map((item, index) => {
+                            const selected = serviceSelected(item.id) 
+                            return (
+                                <Card
+                                    itemId={index}
+                                    id={index}     
+                                    key={index}
+                                    item={item}
+                                    selected={selected}
+                                    onClick={() => setService(item)}
+                                />
+                            )
+                        })
+                    }
+                </ScrollView>
+            </Box>  
         </div>
     )
 }

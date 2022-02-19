@@ -6,7 +6,9 @@ import { Box, Stack, Typography, Button, useMediaQuery, useTheme } from '@mui/ma
 
 // Lottie
 import Lottie from 'react-lottie';
-import animationData from '../../../assets/lottie/404.json';
+import animationDataLight from '../../../assets/lottie/restricted_light.json';
+import animationDataDark from '../../../assets/lottie/restricted_dark.json';
+
 
 export default function PageNotFound() {
 
@@ -19,7 +21,7 @@ export default function PageNotFound() {
     const defaultOptions = {
         loop: true,
         autoplay: true,
-        animationData: animationData,
+        animationData: theme.palette.mode === 'light' ? animationDataLight : animationDataDark,
         rendererSettings: {
           preserveAspectRatio: "xMidYMid slice"
         }
@@ -42,7 +44,7 @@ export default function PageNotFound() {
       <Stack justifyContent="center" alignItems="center" spacing={3}>
         <Lottie 
           options={defaultOptions}
-          width={isMobile ? '80vw' : 400}
+          width={isMobile ? '80vw' : 240}
           isClickToPauseDisabled={true}
         />
 
@@ -52,11 +54,11 @@ export default function PageNotFound() {
             </Typography>
 
             <Typography variant="body1" sx={{ textAlign: "center", maxWidth: isMobile ? '75vw' : 400, opacity: .75 }}>
-                Ova stranica nije pronađena. Stranica je možda na drugoj lokaciji ili niste ispravno unijeli adresu.
+                Ne možete pristupiti ovoj stranici zato što nemate pripadne permisije.
             </Typography>
         </Box>
 
-        <Button onClick={handleOnClick}>
+        <Button color="secondary" onClick={handleOnClick}>
           Vrati me na početnu stranicu
         </Button>
 

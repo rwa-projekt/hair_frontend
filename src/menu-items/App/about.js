@@ -11,13 +11,13 @@ const icons = {
 
 const about = {
     id: 'about',
-    title: 'About',
-    caption: "Informations about barber booking",
+    title: 'Informacije',
+    caption: "Naše usluge i korisnici",
     type: 'group',
     children: [
         {
             id: 'hairstyles',
-            title: 'Hairstyles',
+            title: 'Usluge',
             type: 'item',
             url: '/hairstyles',
             icon: icons.IconCut,
@@ -25,7 +25,7 @@ const about = {
         },
         {
             id: 'workers',
-            title: 'Workers',
+            title: 'Radnici',
             type: 'item',
             url: '/workers',
             icon: icons.IconUsers,

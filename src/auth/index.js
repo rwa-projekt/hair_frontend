@@ -6,6 +6,9 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { GET_USER, LOGIN, LOGOUT, REGISTER } from "../state/modules/user/actions";
 
+// Permissions
+import { PermissionProvider } from './permissions'
+
 // Creating Auth Context
 let AuthContext = createContext(null);
 
@@ -21,6 +24,9 @@ function AuthProvider({ children }) {
   const user = useSelector(state => state.USER.user);
   const isAuthenticated = !!user?.data?.token
   const isAdmin = user?.data?.account.is_admin
+  //! Test data
+  user.permissions = ['view_workers']
+  //! Test data
 
   // Methods
 
@@ -85,10 +91,17 @@ function AuthProvider({ children }) {
   // Informations about user
   let value = { user, isAdmin, isAuthenticated, login, register, logout };
 
+  // Getting permissions
+  const fetchPermission = (user) => (permission) => {
+    return user.permissions.includes(permission);
+  }
+
   // Rendering children
   return (
     <AuthContext.Provider value={value}>
+      <PermissionProvider fetchPermission={fetchPermission(user)}>
         {children}
+      </PermissionProvider>
     </AuthContext.Provider>
   )
 }

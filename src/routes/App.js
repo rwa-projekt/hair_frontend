@@ -16,7 +16,7 @@ const Workers = loadable(() => import('../views/App/Workers'));
 const History = loadable(() => import('../views/App/History'));
 const Profile = loadable(() => import('../views/App/Profile'));
 const General = loadable(() => import('../views/App/Profile/components/General'));
-const ChangePassword = loadable(() => import('../views/App/Profile/components/ChangePassword'));
+const Shifts = loadable(() => import('../views/App/Profile/components/Shifts'));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -72,8 +72,8 @@ const AppRoutes = {
                     element: <General />
                 },
                 {
-                    path: 'change-password',
-                    element: <ChangePassword />
+                    path: 'shifts',
+                    element: <Shifts />
                 }
             ]
         },

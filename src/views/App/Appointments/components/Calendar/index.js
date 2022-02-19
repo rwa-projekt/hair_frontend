@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
+import axios from 'axios'
+import { getApiEndpoint } from '../../../../../axios/endpoints'
+import { useAuth } from '../../../../../auth'
+import { useIsLaptop } from '../../../../../hooks/useDevice';
 
 // Context
 import { useAppointments } from '../../index'
@@ -9,21 +13,36 @@ import isWeekend from 'date-fns/isWeekend';
 import hrLocale from 'date-fns/locale/hr'
 
 // MUI
-import { TextField, Box, Paper, Stack, Chip } from '@mui/material';
+import { TextField, Box, Paper, Stack, Chip, Typography } from '@mui/material';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import StaticDatePicker from '@mui/lab/StaticDatePicker';
+import CalendarPicker from '@mui/lab/CalendarPicker';
+
+// Components
+import ScrollView from '../../../../../components/ScrollView'
 
 export default function Calendar() {
 
+	// Hooks
+    const { user } = useAuth()
+	const smallScreen = useIsLaptop()
+
 	// Variables
-	const { setDate, setTime, timeSelected } = useAppointments()
+	const { barber, setDate, setTime, timeSelected } = useAppointments()
 	const [value, setValue] = useState(new Date());
+	const [timestamps, setTimestamps] = useState([]);
 
 	// Methods
 	useEffect(() => {
 		setDate(moment(value).format('YYYY-MM-DD'))
+		getTimestamps()
 	}, [])
+
+	useEffect(() => {
+		getTimestamps()
+	}, [value, barber])
+
 
 	function handleOnChange(newValue){
 		setValue(newValue)
@@ -34,58 +53,121 @@ export default function Calendar() {
 		setTime("")
 	}
 
+	function getTimestamps(){
+		if(barber){
+			axios.get(
+				`${getApiEndpoint()}barber_booking/orders/busy/?barber=${barber?.id}&date=${moment(value).format('YYYY-MM-DD')}`,
+				{headers: {	Authorization: "Token " + user.data.token}}
+			)
+				.then(res => {
+					console.log("Response => ", res)
+					setTimestamps(res.data)
+				})
+				.catch(err => {
+					console.log("Error => ", err)
+					setTimestamps([])
+				})
+		}
+	}
+
 	function handleOnChipClick(time){
 		setTime(time)
 	}
 
+	function parseTimestamp(timestamp){
+		return moment(timestamp).format('h:mm')
+	}
 
-	// Dummy data
-	const timestamps = [
-		{ id: 1, time: "8:00" },
-		{ id: 2, time: "8:30" },
-		{ id: 3, time: "9:00" },
-		{ id: 4, time: "9:30" },
-		{ id: 5, time: "10:00" },
-		{ id: 6, time: "10:30" },
-		{ id: 7, time: "11:00" },
-		{ id: 8, time: "11:30" },
-		{ id: 9, time: "12:00" },
-		{ id: 10, time: "12:30" },
-		{ id: 11, time: "13:00" },
-		{ id: 12, time: "13:30" },
-	]
+	// Content
+	const timestampsContent = timestamps.map((item, index) => {
+		const time = parseTimestamp(item.start_datetime)
+		const color = timeSelected(time) ? 'primary' : 'default'
+		return (
+			<Chip
+				itemId={index}
+				id={index}      
+				key={index}
+				label={time}
+				variant='contained'
+				color={color}
+				onClick={() => handleOnChipClick(time)}
+				sx={{ 
+					mb: '12px !important',
+					ml: '0px !important', 
+					mr: '12px !important', 
+					px: smallScreen ? .5 : 3,
+					py: smallScreen ? 2.25 : 3,
+					boxSizing: 'border-box !important',
+					fontSize: 14,
+				}}
+			/>
+		)
+	})
+
+	const timestampsLayout = 
+		smallScreen ? 
+			<Box sx={{ width: '100%' }}>
+				<Typography variant="caption" sx={{ height: 40, pl: 1 }}>Termini</Typography>
+				<Box sx={{ height: 12 }} />
+				<ScrollView>
+					{ timestampsContent }
+				</ScrollView>
+			</Box>
+			:
+			<>{ timestampsContent }</>
 
 	return (
 		<Stack
-			direction="row"
-			alignItems="flex-start"
+			direction={smallScreen ? 'column' : 'row'}
+			alignItems='flex-start'
 			justifyContent="space-between"
+			sx={{ width: '100%', height: '100%' }}
 		>
 			
 			<Box sx={{ width: '100%', height: '100%', position: 'relative' }}>
 				<LocalizationProvider dateAdapter={AdapterDateFns} locale={hrLocale}>
-					<StaticDatePicker
-						orientation="landscape"
-						openTo="day"
-						views={["day"]}
-						value={value}
-						shouldDisableDate={isWeekend}
-						showToolbar
-						toolbarTitle="Izaberite datum"
-						onChange={newValue => handleOnChange(newValue)}
-						renderInput={(params) => <TextField {...params} />}
-					/>
+					{
+						smallScreen ?
+						<CalendarPicker
+							// orientation="landscape"
+							openTo="day"
+							views={["day"]}
+							date={value}
+							// shouldDisableDate={isWeekend}
+							// minDate={new Date()}
+							showToolbar
+							toolbarTitle="Izaberite datum"
+							onChange={newValue => handleOnChange(newValue)}
+							renderInput={(params) => <TextField {...params} />}
+						/>
+						:
+						<StaticDatePicker
+							orientation="landscape"
+							openTo="day"
+							views={["day"]}
+							date={value}
+							// shouldDisableDate={isWeekend}
+							// minDate={new Date()}
+							showToolbar
+							toolbarTitle="Izaberite datum"
+							onChange={newValue => handleOnChange(newValue)}
+							renderInput={(params) => <TextField {...params} />}
+						/>
+					}
 				</LocalizationProvider>
 				
 				{/* Hide Button */}
-				<Paper
-					elevation={0} 
-					sx={{ 
-						width: 80, height: 80,
-						position: 'absolute',
-						bottom: 0, left: 0
-					}}
-				/>
+				{
+					!smallScreen &&
+						<Paper
+							elevation={0} 
+							sx={{ 
+								width: 80, height: 80,
+								position: 'absolute',
+								bottom: 0, left: 0
+							}}
+						/>
+				}
 			</Box>
 
 			<Stack
@@ -93,30 +175,52 @@ export default function Calendar() {
 				alignItems="flex-start"
 				justifyContent="flex-start"
 				spacing={2}
-				flexWrap="wrap"
-				sx={{ width: '65%', height: 'max-content' }}
+				flexWrap={smallScreen ? 'nowrap' : 'wrap'}
+				sx={{ width: smallScreen ? '100%' : '65%', height: 'max-content'}}
 			>
 				{
-					timestamps.map((item, index) => {
-						const color = timeSelected(item.time) ? 'primary' : 'default'
-						return (
-							<Chip
-								key={index}
-								label={item.time}
-								variant='contained'
-								color={color}
-								onClick={() => handleOnChipClick(item.time)}
-								sx={{ 
-									mb: '12px !important',
-									ml: '0px !important', 
-									mr: '12px !important', 
-									p: 3,
-									boxSizing: 'border-box !important',
-									fontSize: 14,
-								}}
-							/>
-						)
-					})
+					barber === null?
+						<Stack 
+							direction="column" 
+							alignItems="center" 
+							justifyContent="center" 
+							spacing={1} 
+							sx={{ width: '100%', height: 240 }}
+						>
+							<Typography variant="h6">
+								Termini
+							</Typography>
+
+							<Typography 
+								variant="caption" 
+								sx={{ opacity: .5, maxWidth: 200, textAlign: 'center' }}
+							>
+								Izaberite frizera da biste vidjeli slobodne termine.
+							</Typography>
+						</Stack>
+					:
+					timestamps.length ? 
+						timestampsLayout
+						:
+						<Stack 
+							direction="column" 
+							alignItems="center" 
+							justifyContent="center" 
+							spacing={1} 
+							sx={{ width: '100%', height: 240 }}
+						>
+							<Typography variant="h6">
+								Termini
+							</Typography>
+
+							<Typography 
+								variant="caption" 
+								sx={{ opacity: .5, maxWidth: 200, textAlign: 'center' }}
+							>
+								Izgleda da { barber.name || "Frizer" } nema slobodnih termina u {" "}
+								{ moment(value).format('dddd') === "srijeda" ? "srijedu" : moment(value).format('dddd')}.
+							</Typography>
+						</Stack>
 				}
 			</Stack>
 		</Stack>

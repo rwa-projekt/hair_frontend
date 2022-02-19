@@ -59,8 +59,8 @@ export default function MyProfile(){
                         onChange={handleChange} 
                         aria-label="basic tabs example"
                     >
-                        <LinkTab label="General" value="general" />
-                        <LinkTab label="Change password" value="change-password" />
+                        <LinkTab label="Osnovno" value="general" />
+                        <LinkTab label="Smjene" value="shifts" />
                     </Tabs>
                 </Box>
             </Box>

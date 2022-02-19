@@ -5,13 +5,15 @@ import { combineReducers } from 'redux';
 import UI from './modules/ui';
 import USER from './modules/user';
 import HAIRSTYLES from './modules/hairstyles';
+import BARBERS from './modules/barbers';
 
 // ==============================|| COMBINE REDUCER ||============================== //
 
 const reducer = combineReducers({
     UI,
     USER,
-    HAIRSTYLES
+    HAIRSTYLES,
+    BARBERS
 });
 
 export default reducer;
