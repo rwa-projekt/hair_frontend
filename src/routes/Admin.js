@@ -39,12 +39,12 @@ const AdminRoutes = {
                 },
                 {
                     path: '',
-                    element: <Navigate to="dashboard" />
+                    element: <Navigate to="hairstyles" />
                 },
-                {
-                    path: 'dashboard',
-                    element: <Dashboard/>
-                },
+                // {
+                //     path: 'dashboard',
+                //     element: <Dashboard/>
+                // },
                 {
                     path: 'hairstyles',
                     element: <Hairstyles/>,
@@ -59,20 +59,20 @@ const AdminRoutes = {
                         },
                     ]
                 },
-                {
-                    path: 'workers',
-                    element: <Workers/>,
-                    children: [
-                        {
-                            path: '*',
-                            element: <WorkersForm />
-                        },
-                        {
-                            path: '',
-                            element: <WorkersEmpty />
-                        },
-                    ]
-                }
+                // {
+                //     path: 'workers',
+                //     element: <Workers/>,
+                //     children: [
+                //         {
+                //             path: '*',
+                //             element: <WorkersForm />
+                //         },
+                //         {
+                //             path: '',
+                //             element: <WorkersEmpty />
+                //         },
+                //     ]
+                // }
             ]
         },
     ]

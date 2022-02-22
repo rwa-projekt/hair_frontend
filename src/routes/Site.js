@@ -29,7 +29,7 @@ const SiteRoutes = {
                 },
                 {
                     path: '',
-                    element: <Navigate to="home" />
+                    element: <Navigate to="about-us" />
                 },
                 // {
                 //     path: 'home',

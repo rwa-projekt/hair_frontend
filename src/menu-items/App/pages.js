@@ -1,8 +1,8 @@
 // assets
-import { IconKey, IconHandStop, IconDashboard, IconCalendarTime } from '@tabler/icons';
+import { IconKey, IconHandStop, IconCalendarTime, IconSmartHome } from '@tabler/icons';
 
 // constant
-const icons = { IconKey, IconHandStop, IconDashboard, IconCalendarTime };
+const icons = { IconKey, IconHandStop, IconCalendarTime, IconSmartHome };
 
 // ===========================|| EXTRA PAGES MENU ITEMS ||=========================== //
 
@@ -16,7 +16,7 @@ const pages = {
             title: 'Početna',
             type: 'item',
             url: '/dashboard',
-            icon: icons.IconDashboard,
+            icon: icons.IconSmartHome,
             breadcrumbs: false
         },
         {

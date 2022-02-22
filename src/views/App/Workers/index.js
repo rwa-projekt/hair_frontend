@@ -32,7 +32,7 @@ export default function DataGridDemo() {
   return (
     <Restricted to="view_workers">
       <PageTitle />     
-      <div style={{ height: `calc(${barbers.data.length + 2} * 52px + 8px)`, minHeight: 180, width: '100%' }}>
+      <div style={{ height: `calc(${barbers.data.length + 2} * 52px + 8px)`, minHeight: 180, maxHeight: 580, width: '100%' }}>
           <DataGrid
               rows={barbers.data}
               columns={columns}

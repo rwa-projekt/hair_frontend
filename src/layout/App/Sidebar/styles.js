@@ -2,9 +2,9 @@ import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles((theme) => ({
     logoIcon: {
-        minWidth: 40,
-        width: 40,
-        height: 40,
+        minWidth: 92,
+        width: 92,
+        height: 92,
         strokeWidth: 1.5,
         color: theme.palette.grey[700]
     },

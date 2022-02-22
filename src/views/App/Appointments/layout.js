@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
+import { useNavigate } from 'react-router'
 import { useIsLaptop } from '../../../hooks/useDevice'
 
 // Context
 import { useAppointments } from './index'
 
-
 // MUI
-import { Stack, Box, Button, IconButton, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import { Stack, Box, Button, CircularProgress, Typography, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 // Components
 import PageTitle from '../../../components/PageTitle'
@@ -21,7 +21,8 @@ import { IconCheck, IconDots } from '@tabler/icons'
 export default function Appointments(){
 
     // Variables
-    const { checkout, submit, canSubmit } = useAppointments()
+    const navigate = useNavigate()
+    const { loading, status, setStatus, canSubmit, submit } = useAppointments()
     const smallScreen = useIsLaptop()
 
     const [open, setOpen] = React.useState(false);
@@ -34,9 +35,16 @@ export default function Appointments(){
         setOpen(false)
     }
 
+    function successCallback(){
+        setTimeout(() => {
+            setOpen(false)
+            navigate('/dashboard')
+            setStatus('')
+        }, 2500);
+    }
+
     function handleSubmit(){
-        submit()
-        setOpen(false)
+        submit(successCallback)
     }
 
     return(
@@ -119,26 +127,57 @@ export default function Appointments(){
                             <IconCheck size="1.75em" style={{ color: "#47931b" }} />
                         </Box>
 
-                        <Typography variant="h5">
-                            Rezervacija
-                        </Typography>
+                        {
+                            status !== 'success' &&
+                                <>
+                                    <Typography variant="h5">
+                                        Rezervacija
+                                    </Typography>
 
-                        <Typography variant="body1" sx={{ opacity: .75 }}>
-                            Jeste li sigurni da želite potvrditi rezervaciju?
-                        </Typography>
+                                    <Typography variant="body1" sx={{ opacity: .75 }}>
+                                        {
+                                            status === 'error' ?
+                                                "Pogreška" :
+                                                "Jeste li sigurni da želite potvrditi rezervaciju?"
+                                        }
+                                    </Typography>
+                                </>
+                        }
 
                     </Stack>
                 </DialogTitle>
 
-                <DialogContent sx={{ width: smallScreen ? '100%' : 600, height: smallScreen ? '100%' : 'auto', px: 4 }}>
-                    <Checkout />
+                <DialogContent 
+                    sx={{ 
+                        display: 'grid', placeItems: 'center', 
+                        width: smallScreen ? '100%' : 600, 
+                        height: smallScreen ? '100%' : 'auto', 
+                        px: 4,
+                        transition: '250ms ease'
+                    }}
+                >
+                    {
+                        status === 'success' ?
+                            <Typography variant="h6" sx={{ textAlign: 'center' }}>Uspješno ste rezervirali termin!</Typography> :
+                        status === 'error' ?
+                            <Typography variant="h6" sx={{ textAlign: 'center' }}>Došlo je do pogreške pri rezerviranju termina...</Typography> :
+                        loading ?
+                            <CircularProgress />
+                            :
+                            <Checkout />
+                    }
                 </DialogContent>
 
                 <DialogActions sx={{ p: 2 }}>
-                    <Button onClick={handleClose} autoFocus>
-                        Odustani
-                    </Button>
-                    <Button onClick={handleSubmit}>Potvrdi</Button>
+                    {
+                        status !== 'success' && 
+                            <>
+                                <Button onClick={handleClose} autoFocus>
+                                    Odustani
+                                </Button>
+                                <Button onClick={handleSubmit}>Potvrdi</Button>
+                            </>
+                    }
                 </DialogActions>
             </Dialog>
         </Stack>

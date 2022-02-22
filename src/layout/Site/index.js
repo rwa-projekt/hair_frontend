@@ -97,7 +97,7 @@ export default function SiteLayout() {
 
                                         <div style={{ width: 1, height: 32, backgroundColor: '#e4e4e4' }} />
 
-                                        <Typography
+                                        {/* <Typography
                                             onClick={() => handleNavigate('home')} 
                                             component="a" 
                                             variant="body2" 
@@ -108,7 +108,7 @@ export default function SiteLayout() {
                                             }}
                                         >
                                             Početna
-                                        </Typography>
+                                        </Typography> */}
 
                                         <Typography
                                             onClick={() => handleNavigate('about-us')} 

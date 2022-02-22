@@ -103,7 +103,7 @@ export default function Empty() {
 				{
 					hairstyles.status === 'loading' ? <CircularProgress /> :
 						hairstyles.data.length ?
-						<div style={{ height: `calc(${hairstyles.data.length + 2} * 52px + 8px)`, width: '100%' }}>
+						<div style={{ height: `calc(${hairstyles.data.length + 2} * 52px + 8px)`, minHeight: 180, maxHeight: 580, width: '100%' }}>
 							<DataGrid
 								rows={hairstyles.data}
 								columns={columns}

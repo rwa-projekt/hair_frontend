@@ -24,6 +24,11 @@ import {
   watcher_getBarbers
 } from "./modules/barbers";
 
+// Reservations watchers
+import {
+  watcher_getReservations
+} from "./modules/reservations";
+
 // ==============================|| REDUX - MAIN STORE ||============================== //
 
 // Saga middleware
@@ -35,7 +40,7 @@ const middlewares = [thunk];
 // Creating store
 const createStoreWithFirebase = compose(
   applyMiddleware(...middlewares, sagaMiddleware),
-  // composeWithDevTools()
+  composeWithDevTools()
 )(createStore);
 
 // Store
@@ -51,6 +56,8 @@ sagaMiddleware.run(watcher_getUser);
 sagaMiddleware.run(watcher_getHairstyles);
 //? Barbers
 sagaMiddleware.run(watcher_getBarbers);
+//? Reservvations
+sagaMiddleware.run(watcher_getReservations);
 
 // Persister
 const persister = 'RWA';

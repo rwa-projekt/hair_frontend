@@ -69,7 +69,7 @@ export default function AccountMenu({ mode, setMode }) {
   }
 
   function handleGoToAdminsView() {
-    navigate('/admin/dashboard')
+    navigate('/admin/')
   }
 
   function handleOnProfileClick(){

@@ -18,12 +18,10 @@ export default function Appointments(){
         client: user.data.account.id,
         barber: null,
         hair_style: null,
-        order_items: []
     }
 
     // Getters
     const [form, setForm] = useState(initialForm)
-    // const serviceSelected = service => form.order_items.some(item => item?.id === service)
     const serviceSelected = service => form.hair_style?.id === service
     const barberSelected = barber => form.barber?.id === barber
     const timeSelected = time => form.time === time
@@ -32,10 +30,9 @@ export default function Appointments(){
         time: form.time,
         client: user.data.account.name || "Korisnik",
         barber: form.barber?.name,
-        price: getPrice(),
-        time_needed: getTimeNeeded(),
+        price: form.hair_style?.price,
+        time_needed: form.hair_style?.time_needed,
         services: form.hair_style?.name
-        // services: form.order_items?.map(item => item?.name)
     }
     const canSubmit = 
         form.date !== "" &&
@@ -43,29 +40,10 @@ export default function Appointments(){
         form.client !== null &&
         form.barber !== null &&
         form.hair_style !== null
-        // form.order_items.length
 
+    const [loading, setLoading] = useState(false)
+    const [status, setStatus] = useState('')
     
-    function getPrice(){
-        // let price = 0;
-        // if(form.order_items.length){
-        //     const arr = [...form.order_items.map(item => +item.price)]
-        //     price = arr.reduce((previousValue, currentValue) => previousValue + currentValue)
-        // }
-        // return price;
-        return form.hair_style?.price
-    }
-
-    function getTimeNeeded() {
-        // let time_needed = 0;
-        // if(form.order_items.length){
-        //     const arr = [...form.order_items.map(item => +item.time_needed)]
-        //     time_needed = arr.reduce((previousValue, currentValue) => previousValue + currentValue)
-        // }
-        // return time_needed;
-        return form.hair_style?.time_needed
-    }
-
     // Setters
     function setDate(date){
         setForm(prevState => ({...prevState, date }));
@@ -76,18 +54,6 @@ export default function Appointments(){
     }
 
     function setService(hair_style){
-        // if(form.order_items?.some(item => item.id === hair_style.id)){
-        //     const orders = [...form.order_items]
-        //     const index = form.order_items.findIndex(item => item.id === hair_style.id)
-        //     orders.splice(index, 1)
-        //     setOrderItems(orders)
-        // }
-        // else{
-        //     const orders = [...form.order_items]
-        //     orders.push(hair_style)
-        //     setOrderItems(orders)
-        // }
-
         setForm(prevState => ({...prevState, hair_style }));
     }
 
@@ -95,19 +61,8 @@ export default function Appointments(){
         setForm(prevState => ({...prevState, barber }));
     }
 
-    function setOrderItems(order_items){
-        setForm(prevState => ({...prevState, order_items }));
-    }
-
-    function submit(){
-        const { date, time, client, barber, order_items, hair_style } = form;
-        // const _order_items = [];
-        // order_items.forEach(element => {
-        //     _order_items.push({
-        //         hair_style: element.id,
-        //         barber: barber.id
-        //     })
-        // });
+    function submit(callback){
+        const { date, time, client, barber, hair_style } = form;
 
         const data = {
             start_datetime: `${date} ${time}`,
@@ -118,12 +73,18 @@ export default function Appointments(){
             }]
         }
 
+        setLoading(true)
         axios.post(`${getApiEndpoint()}barber_booking/orders/`, data, {headers: {Authorization: "Token " + user.data.token}})
             .then(res => {
                 console.log("Response => ", res)
+                setStatus('success')
+                callback()
+                setLoading(false)
             })
             .catch(err => {
                 console.log("Error => ", err)
+                setStatus('error')
+                setLoading(false)
             })
     }
 
@@ -131,6 +92,9 @@ export default function Appointments(){
         form,
         checkout,
         canSubmit,
+        loading,
+        status,
+        setStatus,
         barber: form.barber,
         serviceSelected,
         barberSelected,

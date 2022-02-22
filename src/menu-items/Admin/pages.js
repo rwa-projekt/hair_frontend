@@ -16,14 +16,14 @@ const pages = {
     // caption: "Pages",
     type: 'group',
     children: [
-        {
-            id: 'dashboard',
-            title: 'Dashboard',
-            type: 'item',
-            url: 'admin/dashboard',
-            icon: icons.IconDashboard,
-            breadcrumbs: true
-        },
+        // {
+        //     id: 'dashboard',
+        //     title: 'Dashboard',
+        //     type: 'item',
+        //     url: 'admin/dashboard',
+        //     icon: icons.IconDashboard,
+        //     breadcrumbs: true
+        // },
         {
             id: 'hairstyles',
             title: 'Usluge',
@@ -46,28 +46,28 @@ const pages = {
                 }
             ]
         },
-        {
-            id: 'workers',
-            title: 'Korisnici',
-            type: 'item',
-            url: 'admin/workers',
-            icon: icons.IconUsers,
-            breadcrumbs: true,
-            children: [
-                {
-                    path: '',
-                    name: 'Korisnici',
-                },
-                {
-                    path: 'add',
-                    name: 'Dodavanje',
-                },
-                {
-                    path: '*',
-                    name: 'Uređivanje',
-                }
-            ]
-        },
+        // {
+        //     id: 'workers',
+        //     title: 'Korisnici',
+        //     type: 'item',
+        //     url: 'admin/workers',
+        //     icon: icons.IconUsers,
+        //     breadcrumbs: true,
+        //     children: [
+        //         {
+        //             path: '',
+        //             name: 'Korisnici',
+        //         },
+        //         {
+        //             path: 'add',
+        //             name: 'Dodavanje',
+        //         },
+        //         {
+        //             path: '*',
+        //             name: 'Uređivanje',
+        //         }
+        //     ]
+        // },
     ]
 };
 

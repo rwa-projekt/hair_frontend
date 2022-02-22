@@ -22,6 +22,12 @@ import CalendarPicker from '@mui/lab/CalendarPicker';
 // Components
 import ScrollView from '../../../../../components/ScrollView'
 
+const allTimestamps = [
+    "9:00", "9:30", "10:00", "10:30","11:00", "11:30",
+    "12:00", "12:30", "13:00", "13:30", "14:00", "14:30",
+    "15:00", "15:30","16:00", "16:30"
+]
+
 export default function Calendar() {
 
 	// Hooks
@@ -78,24 +84,32 @@ export default function Calendar() {
 		return moment(timestamp).format('h:mm')
 	}
 
+	function _freeTimestamps(){
+		const busyTimestamps = timestamps.map(item => parseTimestamp(item.start_datetime))
+		return allTimestamps
+			.filter(x => !busyTimestamps.includes(x))
+			.concat(busyTimestamps.filter(x => !allTimestamps.includes(x)));
+	}
+
+	const freeTimestamps = _freeTimestamps()
+
 	// Content
-	const timestampsContent = timestamps.map((item, index) => {
-		const time = parseTimestamp(item.start_datetime)
-		const color = timeSelected(time) ? 'primary' : 'default'
+	const timestampsContent = freeTimestamps.map((item, index) => {
+		const color = timeSelected(item) ? 'primary' : 'default'
 		return (
 			<Chip
 				itemId={index}
 				id={index}      
 				key={index}
-				label={time}
+				label={item}
 				variant='contained'
 				color={color}
-				onClick={() => handleOnChipClick(time)}
+				onClick={() => handleOnChipClick(item)}
 				sx={{ 
 					mb: '12px !important',
 					ml: '0px !important', 
 					mr: '12px !important', 
-					px: smallScreen ? .5 : 3,
+					px: smallScreen ? .5 : 2.5,
 					py: smallScreen ? 2.25 : 3,
 					boxSizing: 'border-box !important',
 					fontSize: 14,
@@ -129,12 +143,12 @@ export default function Calendar() {
 					{
 						smallScreen ?
 						<CalendarPicker
-							// orientation="landscape"
+							orientation="landscape"
 							openTo="day"
 							views={["day"]}
 							date={value}
-							// shouldDisableDate={isWeekend}
-							// minDate={new Date()}
+							shouldDisableDate={isWeekend}
+							minDate={new Date()}
 							showToolbar
 							toolbarTitle="Izaberite datum"
 							onChange={newValue => handleOnChange(newValue)}
@@ -146,8 +160,8 @@ export default function Calendar() {
 							openTo="day"
 							views={["day"]}
 							date={value}
-							// shouldDisableDate={isWeekend}
-							// minDate={new Date()}
+							shouldDisableDate={isWeekend}
+							minDate={new Date()}
 							showToolbar
 							toolbarTitle="Izaberite datum"
 							onChange={newValue => handleOnChange(newValue)}
@@ -185,21 +199,24 @@ export default function Calendar() {
 							alignItems="center" 
 							justifyContent="center" 
 							spacing={1} 
-							sx={{ width: '100%', height: 240 }}
+							sx={{ width: '100%', height: smallScreen ? '100%' : 240 }}
 						>
-							<Typography variant="h6">
-								Termini
-							</Typography>
+							{
+								!smallScreen &&	
+									<Typography variant="h6">
+										Termini
+									</Typography>
+							}
 
 							<Typography 
 								variant="caption" 
-								sx={{ opacity: .5, maxWidth: 200, textAlign: 'center' }}
+								sx={{ opacity: .5, maxWidth: smallScreen ? '100%' : 200, textAlign: smallScreen ? 'left' :  'center' }}
 							>
 								Izaberite frizera da biste vidjeli slobodne termine.
 							</Typography>
 						</Stack>
 					:
-					timestamps.length ? 
+					freeTimestamps.length ? 
 						timestampsLayout
 						:
 						<Stack 
@@ -207,15 +224,18 @@ export default function Calendar() {
 							alignItems="center" 
 							justifyContent="center" 
 							spacing={1} 
-							sx={{ width: '100%', height: 240 }}
+							sx={{ width: '100%', height: smallScreen ? '100%' : 240 }}
 						>
-							<Typography variant="h6">
-								Termini
-							</Typography>
+							{
+								!smallScreen && 
+									<Typography variant="h6">
+										Termini
+									</Typography>
+							}
 
 							<Typography 
 								variant="caption" 
-								sx={{ opacity: .5, maxWidth: 200, textAlign: 'center' }}
+								sx={{ opacity: .5, maxWidth: smallScreen ? '100%' : 200, textAlign: smallScreen ? 'left' :  'center' }}
 							>
 								Izgleda da { barber.name || "Frizer" } nema slobodnih termina u {" "}
 								{ moment(value).format('dddd') === "srijeda" ? "srijedu" : moment(value).format('dddd')}.

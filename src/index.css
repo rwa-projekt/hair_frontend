@@ -25,6 +25,7 @@ a {
 
 .scrollmenu-wrapper{
     position: relative;
+    padding-top: 28px;
 }
 
 .scrollmenu-item{
@@ -34,6 +35,10 @@ a {
 @media only screen and (max-width: 1200px) {
     .scrollmenu-container{
         scroll-snap-type: x mandatory;
+    }
+    .scrollmenu-wrapper{
+        position: relative;
+        padding-top: 0px;
     }
 }
 

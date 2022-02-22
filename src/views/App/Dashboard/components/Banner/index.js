@@ -98,7 +98,7 @@ export default function Banner(){
             {/* Right */}
             {
                 !isTablet && 
-                    <Box sx={{ height: '100%', width: 220, mr: 4, position: 'relative'}}>
+                    <Box sx={{ height: '100%', width: 220, mr: 8, position: 'relative'}}>
                         <img 
                             src={Illustration} 
                             style={{ 

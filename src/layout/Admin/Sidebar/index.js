@@ -22,7 +22,7 @@ export default function Sidebar () {
 
     // Methods
     function handleNavigateToDashboard(){
-        navigate('/admin/dashboard')
+        navigate('/dashboard')
     }
 
     // Content

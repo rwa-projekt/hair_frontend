@@ -2,7 +2,7 @@
 import { takeLatest, put, call, select } from "redux-saga/effects";
 
 // Axios imports
-import axios_barbers from "../../../axios/barbers";
+import axios_hairstyles from "../../../axios/reservations";
 import { LOGOUT } from "../user/actions";
 
 // Actions
@@ -12,7 +12,7 @@ import * as actions from "./actions";
 
 // Initial state
 const initialState = {
-    barbers: {
+    reservations: {
         status: "",
         data: []
     }
@@ -23,30 +23,30 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
-        case actions.GET_BARBERS:
+        case actions.GET_RESERVATIONS:
             return {
                 ...state,
-                barbers: {
+                reservations: {
                     status: "loading",
                     data: [],
                     message: ""
                 },
             };
 
-        case actions.GET_BARBERS_SUCCESS:
+        case actions.GET_RESERVATIONS_SUCCESS:
             return {
                 ...state,
-                barbers: {
+                reservations: {
                     status: "",
                     data: action.data,
                     message: action.message
                 },
             };
 
-        case actions.GET_BARBERS_ERROR:
+        case actions.GET_RESERVATIONS_FAIL:
             return {
                 ...state,
-                barbers: {
+                reservations: {
                     status: error,
                     data: [],
                     message: action.message
@@ -71,18 +71,18 @@ const authToken = () => localStorage.getItem("token");
 
 // ::::::::::::::::::: Reducers
 
-// GetBarbers
-export function* watcher_getBarbers() {
-    yield takeLatest(actions.GET_BARBERS, getBarbers);
+// GetReservations
+export function* watcher_getReservations() {
+    yield takeLatest(actions.GET_RESERVATIONS, getReservations);
   }
   
-  function _getBarbers(options) {
-    return axios_barbers(options).get("", {
+  function _getReservations(options) {
+    return axios_hairstyles(options).get("", {
       params: options.queryParams,
     });
   }
   
-  function* getBarbers(payload) {
+  function* getReservations(payload) {
     try {
       // Token
       const token = yield select(authToken);
@@ -95,12 +95,12 @@ export function* watcher_getBarbers() {
       };
   
       // Response
-      const response = yield call(_getBarbers, options);
+      const response = yield call(_getReservations, options);
       const data = transformData(response);
   
       // Yields
       yield put({
-        type: actions.GET_BARBERS_SUCCESS,
+        type: actions.GET_RESERVATIONS_SUCCESS,
         data,
         id: payload.id
       });
@@ -124,7 +124,7 @@ export function* watcher_getBarbers() {
       }
   
       // Dispatch a failure action to the store with the error
-      yield put({ type: actions.GET_BARBERS_ERROR, error, message: "" });
+      yield put({ type: actions.GET_RESERVATIONS_FAIL, error, message: "" });
     }
-  }
-  // GetBarbers end
+}
+// GetReservations end

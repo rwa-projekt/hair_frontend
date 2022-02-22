@@ -64,7 +64,7 @@ function Arrow({ children, disabled, onClick, right }){
             cursor: 'pointer',
             height: 'max-content',
             position: 'absolute',
-            top: -24,
+            top: -16,
             opacity: disabled && .25,
             right
         }}
