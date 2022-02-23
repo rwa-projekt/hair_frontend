@@ -8,7 +8,7 @@ import { Stack, List, Tooltip, ListItemButton, ListItemIcon, IconButton, Avatar,
 import { IconBrandTabler } from '@tabler/icons'
 
 // Components
-import menuItems from '../../../menu-items/Admin'
+import MenuItems from '../../../menu-items/Admin'
 
 
 // ===========================|| SIDEBAR DRAWER ||=========================== //
@@ -16,6 +16,7 @@ import menuItems from '../../../menu-items/Admin'
 export default function Sidebar () {
 
     // Hooks
+    const menuItems = MenuItems()
     const theme = useTheme()
     const { pathname } = useLocation();
     const navigate = useNavigate()

@@ -21,7 +21,8 @@ import {
 
 // Barber watchers
 import {
-  watcher_getBarbers
+  watcher_getBarbers,
+  watcher_getClients
 } from "./modules/barbers";
 
 // Reservations watchers
@@ -40,7 +41,7 @@ const middlewares = [thunk];
 // Creating store
 const createStoreWithFirebase = compose(
   applyMiddleware(...middlewares, sagaMiddleware),
-  composeWithDevTools()
+  // composeWithDevTools()
 )(createStore);
 
 // Store
@@ -56,6 +57,7 @@ sagaMiddleware.run(watcher_getUser);
 sagaMiddleware.run(watcher_getHairstyles);
 //? Barbers
 sagaMiddleware.run(watcher_getBarbers);
+sagaMiddleware.run(watcher_getClients);
 //? Reservvations
 sagaMiddleware.run(watcher_getReservations);
 

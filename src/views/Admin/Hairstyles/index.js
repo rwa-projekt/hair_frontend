@@ -107,7 +107,10 @@ export default function Hairstyles(){
                                     <CircularProgress color="secondary" />
                                 </Box>
                                 :
-                                <List>
+                                <List
+                                    className='custom-scrollbar'
+                                    sx={{ height: 'calc(100vh - 288px)', overflowY: 'auto' }}
+                                >
                                     {
                                         hairstyles.data.length ?
                                             data.length ?

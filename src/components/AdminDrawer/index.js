@@ -30,7 +30,8 @@ export default function AdminDrawer({ loading = false, children }){
                     width: 480, 
                     height: '100vh', 
                     backgroundColor: 'secondary.dark',
-                    position: 'relative'
+                    position: 'relative',
+                    overflowY: 'auto'
                 }}
             >
                 {
@@ -42,7 +43,7 @@ export default function AdminDrawer({ loading = false, children }){
                 <Box 
                     sx={{ 
                         backgroundColor: 'secondary.dark',
-                        p: 4
+                        p: 4,
                     }}
                 >
                     {/* Rendering children */}

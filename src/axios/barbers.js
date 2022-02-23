@@ -4,7 +4,7 @@ import { getApiEndpoint } from "./endpoints";
 
 // Instance
 const instance = (options) => axios.create({
-    baseURL: getApiEndpoint() + "accounts/accounts/barbers/", 
+    baseURL: getApiEndpoint() + "accounts/accounts/", 
     timeout: 10000,
     headers: {
         Authorization: "Token " + options.token,

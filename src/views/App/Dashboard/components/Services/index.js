@@ -49,7 +49,9 @@ export default function Services(){
                     {
                         hairstyles.data.map((item, index) => {
                             return (
-                                    <Stack 
+                                    <Stack
+                                        id={index}
+                                        itemId={index}
                                         key={index} 
                                         direction="column" 
                                         sx={{ width: 280, maxWidth: '100%', px: smallScreen ? 0 : 2, mr: smallScreen && 4 }}

@@ -28,7 +28,7 @@ const AdminRoutes = {
     children: [
         {
             path: '/',
-            element: <Navigate to="/admin/dashboard" />
+            element: <Navigate to="/admin" />
         },
         {
             path: '/admin',

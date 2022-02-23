@@ -1,9 +1,13 @@
-import pages from './pages'
+import Pages from './pages'
 
 // ===========================|| MENU ITEMS ||=========================== //
+export default function MenuItems(){
 
-const menuItems = {
-    items: [pages]
-};
+    const pages = Pages()
 
-export default menuItems;
+    const menuItems = {
+        items: [pages]
+    }
+
+    return menuItems
+}

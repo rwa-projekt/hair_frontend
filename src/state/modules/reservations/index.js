@@ -2,7 +2,7 @@
 import { takeLatest, put, call, select } from "redux-saga/effects";
 
 // Axios imports
-import axios_hairstyles from "../../../axios/reservations";
+import axios_reservations from "../../../axios/reservations";
 import { LOGOUT } from "../user/actions";
 
 // Actions
@@ -77,7 +77,7 @@ export function* watcher_getReservations() {
   }
   
   function _getReservations(options) {
-    return axios_hairstyles(options).get("", {
+    return axios_reservations(options).get("", {
       params: options.queryParams,
     });
   }

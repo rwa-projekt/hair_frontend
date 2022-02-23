@@ -33,15 +33,15 @@ export default function DataGridDemo() {
         
         reservations.data.map(item => {
             arr.push({
-                id: item.id,
-                barber: item.order_items[0].barber.name || 'Frizer',
-                avatar: item.order_items[0].hair_style.avatar,
-                service: item.order_items[0].hair_style.name,
-                status: item.status,
-                duration: item.duration,
-                start_datetime: moment(item.start_datetime).calendar(),
-                end_datetime: moment(item.end_datetime).calendar(),
-                total_price: item.total_price
+                id: item?.id,
+                barber: item?.order_items[0]?.barber?.name || 'Frizer',
+                avatar: item?.order_items[0]?.hair_style?.avatar,
+                service: item?.order_items[0]?.hair_style?.name,
+                status: item?.status,
+                duration: item?.duration,
+                start_datetime: moment(item?.start_datetime)?.calendar(),
+                end_datetime: moment(item?.end_datetime)?.calendar(),
+                total_price: item?.total_price
             })
         })
 
@@ -102,7 +102,7 @@ const columns = [
         //   Adding sufix
 		renderCell: params => (
             <Chip 
-                label={params.row.status === 'active' ? 'U tijeku' : 'Završena'}
+                label={params.row.status === 'active' ? 'Aktivna' : 'Završena'}
                 color={params.row.status === 'active' ? 'success' : 'error'}
             />
         )

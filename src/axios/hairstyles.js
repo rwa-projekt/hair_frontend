@@ -8,7 +8,7 @@ const instance = (options) => axios.create({
     timeout: 10000,
     headers: {
         Authorization: "Token " + options.token,
-        'Content-Type': 'multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW'
+        'Content-Type': options.contentType ? options.contentType : 'application/json'
     },
 })
 

@@ -24,7 +24,7 @@ export default function Banner(){
 
     // Methods
     function handleNavigateToProfile(){
-        navigate('/user/me/general')
+        // navigate('/user/me/general')
     }
 
     function handleNavigateToAppointments(){
@@ -70,15 +70,7 @@ export default function Banner(){
                                 variant="body2" 
                                 sx={{ opacity: .65, fontSize: isTablet && 12 }}
                             >
-                                Završite postavljanje profila.
-                            </Typography>
-                            <Typography 
-                                onClick={handleNavigateToProfile} 
-                                variant="body2" 
-                                sx={{ color: 'primary.main', cursor: 'pointer', fontSize: isTablet && 12 }}
-                            >
-                                Uredi 
-                                { !isTablet && <ModeEditOutlineIcon sx={{ width: 14, height: 14, ml: .5, pt: .2, color: 'primary.main' }} /> }
+                                Rezervirajte termin u našem salonu
                             </Typography>
                         </Stack>
                     </Stack>
@@ -98,7 +90,7 @@ export default function Banner(){
             {/* Right */}
             {
                 !isTablet && 
-                    <Box sx={{ height: '100%', width: 220, mr: 8, position: 'relative'}}>
+                    <Box sx={{ height: '100%', width: 220, mr: 16, position: 'relative'}}>
                         <img 
                             src={Illustration} 
                             style={{ 

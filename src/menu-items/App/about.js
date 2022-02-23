@@ -1,3 +1,5 @@
+import { useAuth } from '../../auth'
+
 // assets
 import { IconCut, IconUsers } from '@tabler/icons';
 
@@ -9,29 +11,51 @@ const icons = {
 
 // ===========================|| UTILITIES MENU ITEMS ||=========================== //
 
-const about = {
-    id: 'about',
-    title: 'Informacije',
-    caption: "Naše usluge i korisnici",
-    type: 'group',
-    children: [
-        {
-            id: 'hairstyles',
-            title: 'Usluge',
-            type: 'item',
-            url: '/hairstyles',
-            icon: icons.IconCut,
-            breadcrumbs: true
-        },
-        {
-            id: 'workers',
-            title: 'Radnici',
-            type: 'item',
-            url: '/workers',
-            icon: icons.IconUsers,
-            breadcrumbs: true
-        },
-    ]
-};
+export default function About(){
 
-export default about;
+    const { hasPermission } = useAuth()
+    const hasViewClientsPermission = hasPermission('view_client')
+    
+    const about = {
+        id: 'about',
+        title: 'Informacije',
+        caption: "Naše usluge i korisnici",
+        type: 'group',
+        children: [
+            {
+                id: 'hairstyles',
+                title: 'Usluge',
+                type: 'item',
+                url: '/hairstyles',
+                icon: icons.IconCut,
+                breadcrumbs: true
+            },
+            {
+                id: 'users',
+                title: hasViewClientsPermission ? 'Korisnici' : 'Radnici',
+                type: hasViewClientsPermission ? 'collapse' : 'item',
+                url: '/users',
+                icon: icons.IconUsers,
+                breadcrumbs: true,
+                children: hasViewClientsPermission && [
+                    {
+                        id: 'users-workers',
+                        title: 'Frizeri',
+                        type: 'item',
+                        url: '/users/workers',
+                        target: true
+                    },
+                    {
+                        id: 'users-clients',
+                        title: 'Korisnici',
+                        type: 'item',
+                        url: '/users/clients',
+                        target: true
+                    },
+                ]
+            },
+        ]
+    };
+
+    return about
+}

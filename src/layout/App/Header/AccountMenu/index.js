@@ -73,8 +73,8 @@ export default function AccountMenu({ mode, setMode }) {
   }
 
   function handleOnProfileClick(){
-    onClose()
-    navigate('/user/me')
+    // onClose()
+    // navigate('/user/me')
   }
 
   function toggleMode(){
@@ -104,7 +104,7 @@ export default function AccountMenu({ mode, setMode }) {
                 </Badge>
                 <Typography variant="subtitle1">{ auth.user.data?.account?.name || 'Korisnik' }</Typography>
                 <Typography variant="body2" sx={{ textAlign: 'center', opacity: .8 }}>
-                    Small description about <br/> user
+                    { auth.user.data?.account?.email }
                 </Typography>
             </Stack>
         </MenuItem>

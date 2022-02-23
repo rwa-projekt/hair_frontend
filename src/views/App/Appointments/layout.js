@@ -40,7 +40,7 @@ export default function Appointments(){
             setOpen(false)
             navigate('/dashboard')
             setStatus('')
-        }, 2500);
+        }, 1500);
     }
 
     function handleSubmit(){

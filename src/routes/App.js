@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate } from "react-router-dom";
 import loadable from '@loadable/component'
+import { useAuth } from '../auth'
 
 // Layout
 import { RequireAuth as AuthGuard } from '../auth'
@@ -13,71 +14,79 @@ const Dashboard = loadable(() => import('../views/App/Dashboard'));
 const Appointments = loadable(() => import('../views/App/Appointments'));
 const Hairstyles = loadable(() => import('../views/App/Hairstyles'));
 const Workers = loadable(() => import('../views/App/Workers'));
+const UsersWorkers = loadable(() => import('../views/App/Workers/components/Workers'));
+const UsersClients = loadable(() => import('../views/App/Workers/components/Clients'));
 const History = loadable(() => import('../views/App/History'));
 const Profile = loadable(() => import('../views/App/Profile'));
-const General = loadable(() => import('../views/App/Profile/components/General'));
-const Shifts = loadable(() => import('../views/App/Profile/components/Shifts'));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const AppRoutes = {
-    path: '/',
-    element: 
-        <AuthGuard>
-            <MainLayout />
-        </AuthGuard>,
-    children: [
-        {
-            path: '*',
-            element: <NotFound />
-        },
-        {
-            path: '/',
-            element: <Navigate replace to="/dashboard" />
-        },
-        {
-            path: '/auth/logout',
-            element: <Logout />
-        },
-        {
-            path: '/dashboard',
-            element: <Dashboard/>
-        },
-        {
-            path: '/appointments',
-            element: <Appointments />
-        },
-        {
-            path: '/hairstyles',
-            element: <Hairstyles />
-        },
-        {
-            path: '/workers',
-            element: <Workers />
-        },
-        {
-            path: '/history',
-            element: <History />
-        },
-        {
-            path: '/user/me',
-            element: <Profile />,
-            children: [
-                {
-                    path: '',
-                    element: <Navigate replace to="general" />
-                },
-                {
-                    path: 'general',
-                    element: <General />
-                },
-                {
-                    path: 'shifts',
-                    element: <Shifts />
-                }
-            ]
-        },
-    ]
-};
 
-export default AppRoutes;
+export default function AppRoutes(){
+
+    const { hasPermission } = useAuth()
+    const hasViewClientsPermission = hasPermission('view_client')
+
+    const AppRoutes = {
+        path: '/',
+        element: 
+            <AuthGuard>
+                <MainLayout />
+            </AuthGuard>,
+        children: [
+            {
+                path: '*',
+                element: <NotFound />
+            },
+            {
+                path: '/',
+                element: <Navigate replace to="/dashboard" />
+            },
+            {
+                path: '/auth/logout',
+                element: <Logout />
+            },
+            {
+                path: '/dashboard',
+                element: <Dashboard/>
+            },
+            {
+                path: '/appointments',
+                element: <Appointments />
+            },
+            {
+                path: '/hairstyles',
+                element: <Hairstyles />
+            },
+            {
+                path: '/users',
+                element: <Workers />,
+                children: hasViewClientsPermission && [
+                    {
+                        path: '',
+                        element: <Navigate replace to="workers" />
+                    },
+                    {
+                        path: 'workers',
+                        element: <UsersWorkers />
+                    },
+                    {
+                        path: 'clients',
+                        element: <UsersClients />
+                    }
+                ]
+            },
+            {
+                path: '/history',
+                element: <History />
+            },
+            // {
+            //     path: '/user/me',
+            //     element: <Profile />
+            // },
+        ]
+    };
+
+    return AppRoutes
+    
+}

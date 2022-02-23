@@ -33,11 +33,11 @@ export default function SiteLayout() {
     }
 
     function handleOnVisionClick() {
-        window.open('https://drive.google.com/file/d/1YMk469lD-JUJlNKKm_YPn_IS4X3GK8Gm/view', '_blank')
+        window.open('https://drive.google.com/file/d/1e3Oq782caTc2x4OPAjJ-2m7azHkaVlC4/view', '_blank')
     }
 
-    function handleOnRegisterClick() {
-        navigate("/auth/register")
+    function handleOnLoginClick() {
+        navigate("/auth/login")
     }
 
     function handleNavigate(url){
@@ -138,11 +138,11 @@ export default function SiteLayout() {
                                         <Button 
                                             sx={{ textTransform: 'none', borderRadius: 40 }}
                                             disableElevation
-                                            onClick={handleOnRegisterClick} 
+                                            onClick={handleOnLoginClick} 
                                             color="primary"
                                             variant="contained"
                                         >
-                                            Započnite
+                                            Prijavite se
                                         </Button>
                                     </Stack>
                                 </>
@@ -207,7 +207,7 @@ export default function SiteLayout() {
                                 <Button 
                                     sx={{ textTransform: 'none', borderRadius: 40 }}
                                     disableElevation
-                                    onClick={() => handleNavigateFromDrawer(null, handleOnRegisterClick)} 
+                                    onClick={() => handleNavigateFromDrawer(null, handleOnLoginClick)} 
                                     color="primary"
                                     variant="contained"
                                 >
@@ -218,10 +218,10 @@ export default function SiteLayout() {
                                                 variant="h6" 
                                                 sx={{ fontWeight: 500 }}
                                             >
-                                                Započnite
+                                                Prijavite se
                                             </Typography>
                                             :
-                                            'Započnite'
+                                            'Prijavite se'
                                     }
                                 </Button>
 

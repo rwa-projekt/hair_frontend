@@ -5,12 +5,13 @@ import { Typography } from '@mui/material';
 
 // Components
 import NavGroup from './NavGroup';
-import menuItem from '../../../../menu-items/App'
+import MenuItems from '../../../../menu-items/App'
 
 // ===========================|| SIDEBAR MENU LIST ||=========================== //
 
 export default function MenuList(){
-    const navItems = menuItem.items.map((item, index) => {
+    const menuItems = MenuItems() ?? []
+    const navItems = menuItems?.items.map((item, index) => {
         switch (item.type) {
             case 'group':
                 return <NavGroup key={item.id} index={index} item={item} />;

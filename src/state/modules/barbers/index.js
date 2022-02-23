@@ -15,6 +15,10 @@ const initialState = {
     barbers: {
         status: "",
         data: []
+    },
+    clients: {
+      status: "",
+      data: []
     }
 };
 
@@ -52,6 +56,36 @@ export default function reducer(state = initialState, action = {}) {
                     message: action.message
                 },
             };
+
+          case actions.GET_CLIENTS:
+            return {
+                ...state,
+                clients: {
+                    status: "loading",
+                    data: [],
+                    message: ""
+                },
+            };
+
+        case actions.GET_CLIENTS_SUCCESS:
+            return {
+                ...state,
+                clients: {
+                    status: "",
+                    data: action.data,
+                    message: action.message
+                },
+            };
+
+        case actions.GET_CLIENTS_FAIL:
+            return {
+                ...state,
+                clients: {
+                    status: error,
+                    data: [],
+                    message: action.message
+                },
+            };
         default:
             return { ...state };
     }
@@ -77,7 +111,7 @@ export function* watcher_getBarbers() {
   }
   
   function _getBarbers(options) {
-    return axios_barbers(options).get("", {
+    return axios_barbers(options).get("barbers/", {
       params: options.queryParams,
     });
   }
@@ -128,3 +162,64 @@ export function* watcher_getBarbers() {
     }
   }
   // GetBarbers end
+
+
+
+
+  // GetBarbers
+export function* watcher_getClients() {
+  yield takeLatest(actions.GET_CLIENTS, getClients);
+}
+
+function _getClients(options) {
+  return axios_barbers(options).get("clients/", {
+    params: options.queryParams,
+  });
+}
+
+function* getClients(payload) {
+  try {
+    // Token
+    const token = yield select(authToken);
+
+    // Options
+    const options = {
+      token: token,
+      queryParams: payload.queryParams,
+      id: payload.id
+    };
+
+    // Response
+    const response = yield call(_getClients, options);
+    const data = transformData(response);
+
+    // Yields
+    yield put({
+      type: actions.GET_CLIENTS_SUCCESS,
+      data,
+      id: payload.id
+    });
+
+    // Success callback
+    if (payload.successCallback) {
+        payload.successCallback();
+    }
+  }
+
+  catch (error) {
+    // Logging out error
+    console.log(error);
+    if (error.response && error.response.status === 401) {
+      yield put({ type: LOGOUT });
+    }
+
+    // Error callback
+    if(payload.errorCallback){
+      payload.errorCallback();
+    }
+
+    // Dispatch a failure action to the store with the error
+    yield put({ type: actions.GET_CLIENTS_FAIL, error, message: "" });
+  }
+}
+// GetBarbers end

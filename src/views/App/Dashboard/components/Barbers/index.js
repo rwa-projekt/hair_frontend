@@ -28,7 +28,7 @@ export default function Services(){
 
     // Methods
     function handleNavigate(){
-        navigate('/workers')
+        navigate('/users')
     }
 
     return(
@@ -46,9 +46,9 @@ export default function Services(){
             <Box sx={{ width: '100%', maxWidth: 1200, mt: 3 }}>
                 <ScrollView>               
                     {
-                        barbers.data.map((item, index) => {
+                        barbers?.data?.map((item, index) => {
                             return (
-                                <Card key={index} item={item} />
+                                <Card id={index} itemId={index} key={index} item={item} />
                             )
                         })
                     }
@@ -70,8 +70,8 @@ function Card({ item }){
                 <Avatar 
                     sx={{ 
                         mr: '4px !important', 
-                        width: '60px !important', 
-                        height: '60px !important', 
+                        width: '48px !important', 
+                        height: '48px !important', 
                         fontSize: '18px !important' 
                     }}
                 >
@@ -85,7 +85,7 @@ function Card({ item }){
                 height: 'auto',
                 boxSizing: 'border-box !important',
                 border: "none !important",
-                fontSize: 18,
+                fontSize: 16,
             }}
         />
     )

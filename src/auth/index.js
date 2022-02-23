@@ -24,10 +24,6 @@ function AuthProvider({ children }) {
   const user = useSelector(state => state.USER.user);
   const isAuthenticated = !!user?.data?.token
   const isAdmin = user?.data?.account.is_admin
-  //! Test data
-  user.permissions = ['view_workers']
-  //! Test data
-
   // Methods
 
   // Handling initial redirects
@@ -36,7 +32,7 @@ function AuthProvider({ children }) {
   }
 
   function adminRedirect(){
-    navigate(location.state.from || '/admin/dashboard')
+    navigate(location.state.from || '/admin')
   }
 
   // Getting user
@@ -59,6 +55,8 @@ function AuthProvider({ children }) {
   useEffect(() => {
     getUser(userRedirect, adminRedirect)
   }, [])
+
+  console.log("User => ", user)
 
 
   // Login
@@ -88,13 +86,17 @@ function AuthProvider({ children }) {
     dispatch({ type: LOGOUT });
   };
 
-  // Informations about user
-  let value = { user, isAdmin, isAuthenticated, login, register, logout };
-
   // Getting permissions
   const fetchPermission = (user) => (permission) => {
-    return user.permissions.includes(permission);
+    return user?.data?.account?.permissions?.includes(permission);
   }
+
+  const hasPermission = (permission) => {
+    return user?.data?.account?.permissions?.includes(permission);
+  }
+
+  // Informations about user
+  let value = { user, isAdmin, isAuthenticated, hasPermission, login, register, logout };
 
   // Rendering children
   return (
@@ -153,7 +155,7 @@ function RequireUser({ children }) {
   let location = useLocation();
 
   // Variables
-  const adminRoute = location.state?.from || '/admin/dashboard'
+  const adminRoute = location.state?.from || '/admin'
   const userRoute = 
     location.state?.from.pathname.includes('admin') ? 
       '/dashboard' : 

@@ -8,7 +8,7 @@ import { TextField, InputAdornment, IconButton } from "@mui/material";
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-export default function FormInputText ({ name, control, label, type = "text", endAdornment, placeholder = "", textFieldProps }) {
+export default function FormInputText ({ disabled = false, name, control, label, type = "text", endAdornment, placeholder = "", textFieldProps }) {
 
   // Variables
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -32,6 +32,7 @@ export default function FormInputText ({ name, control, label, type = "text", en
         formState,
       }) => (
         <TextField
+          disabled={disabled}
           helperText={error ? error.message : null}
           error={!!error}
           onChange={onChange}

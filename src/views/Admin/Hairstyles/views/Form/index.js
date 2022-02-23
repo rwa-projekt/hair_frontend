@@ -29,7 +29,7 @@ export default function Form() {
 	const _defaultValues = {
         name: "",
         price: 0,
-		time_needed: 0,
+		time_needed: 30,
 		file: null
     }
 
@@ -69,7 +69,7 @@ export default function Form() {
 		else{
 			setValue('name', '')
 			setValue('price', 0)
-			setValue('time_needed', 0)
+			setValue('time_needed', 30)
 			setInitialImage([])
 		}
 	}, [id])
@@ -93,7 +93,7 @@ export default function Form() {
 		// Set loading
 		setSubmitLoading(true)
 
-		// Destructuring object
+		// Destructuring form
 		const { name, price, time_needed, file } = form;
 
 		// Creating object
@@ -107,12 +107,16 @@ export default function Form() {
 		
 		// Token
 		const token = await localStorage.getItem("token")
-		const options = { token }
+		const updateOptions = { token }
+		const addOptions = {
+			token,
+			contentType: 'multipart/form-data'
+		}
 
 		if(location.state.update){
-			console.log("DATA => ", data)
-			axios(options)
-				.put(`/${hairstyle.id}/`, data)
+			console.log("UPDATE DATA => ", data)
+			axios(updateOptions)
+				.put(`/${hairstyle.id}/`, { name, price: +price, time_needed: +time_needed })
 				.then(res => {
 
 					// Updating redux
@@ -132,7 +136,7 @@ export default function Form() {
 		else{
 			formData.append('files', file[0]);
 			setSubmitLoading(true)
-			axios(options)
+			axios(addOptions)
 				.post("", formData)
 				.then(res => {
 
@@ -227,7 +231,8 @@ export default function Form() {
 				})}
 			/>
 
-			<Input 
+			<Input
+				disabled={true}
 				name="time_needed"
 				required 
 				control={control} 

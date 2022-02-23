@@ -22,7 +22,6 @@ export default function Login(){
 
     // Variables
     const currentUser = useSelector(state => state.USER.user)
-    const [adminPrompt, setAdminPrompt] = useState(auth.isAuthenticated && auth.isAdmin && location.hash === '#prompt')
     const [snackbarOpened, setSnackbarOpened] = useState(false)
     const [defaultValues] = useState({
         email: localStorage.getItem('bb:last-email'),
@@ -50,18 +49,7 @@ export default function Login(){
     }
 
     async function onAdminCallback(email){
-        // navigate(`${location.pathname}#prompt`)
-        setAdminPrompt(true)
         await localStorage.setItem('bb:last-email', email)
-    }
-
-    function onPrompt(selection){
-        if(selection === 'app'){
-            navigate('/dashboard')
-        }
-        else if(selection === 'admin'){
-            navigate('/admin/dashboard')
-        }
     }
 
     function onSubmit(user) {
@@ -76,101 +64,91 @@ export default function Login(){
 
 
     return(
-        <>
+        <Stack spacing={6} sx={{ maxWidth: 480, width: '100%' }}>
+            {/* Title */}
+            <Box>
+                <Typography variant="h4" sx={{ mb: 1 }}>
+                    Dobrodošli u Barber Booking
+                </Typography>
+                <Typography variant="subtitle2" sx={{ opacity: .8, fontWeight: 400 }}>
+                    Prijavite se da bi nastavili
+                </Typography>
+            </Box>
+
+            {/* <Divider /> */}
+
+            <Stack sx={{ width: '100%' }} spacing={4}>
+
+                <Input 
+                    name="email"
+                    required 
+                    control={control} 
+                    label="E-mail adresa"
+                    inputMode="email"
+                    type="email"
+                    {...register("email", { 
+                        required: FORM_VALIDATIONS.required, 
+                        pattern: FORM_VALIDATIONS.email
+                    })}
+                />
+
+                <Input 
+                    name="password" 
+                    required
+                    control={control} 
+                    label="Lozinka"
+                    type="password"
+                    {...register("password", { 
+                        required: FORM_VALIDATIONS.required
+                    })}
+                />
+            </Stack>
+
+            <Divider>
+                Nemate račun?
+                <Link 
+                    onClick={handleNavigate} 
+                    sx={{ ml: 1, cursor: 'pointer' }}
+                >
+                    Stvorite ga
+                </Link>
+            </Divider>
+
             {
-                !adminPrompt ?
-                    <Stack spacing={6} sx={{ maxWidth: 480, width: '100%' }}>
-                        {/* Title */}
-                        <Box>
-                            <Typography variant="h4" sx={{ mb: 1 }}>
-                                Dobrodošli u Barber Booking
-                            </Typography>
-                            <Typography variant="subtitle2" sx={{ opacity: .8, fontWeight: 400 }}>
-                                Prijavite se da bi nastavili
-                            </Typography>
-                        </Box>
-
-                        {/* <Divider /> */}
-
-                        <Stack sx={{ width: '100%' }} spacing={4}>
-
-                            <Input 
-                                name="email"
-                                required 
-                                control={control} 
-                                label="E-mail adresa"
-                                inputMode="email"
-                                type="email"
-                                {...register("email", { 
-                                    required: FORM_VALIDATIONS.required, 
-                                    pattern: FORM_VALIDATIONS.email
-                                })}
-                            />
-
-                            <Input 
-                                name="password" 
-                                required
-                                control={control} 
-                                label="Lozinka"
-                                type="password"
-                                {...register("password", { 
-                                    required: FORM_VALIDATIONS.required
-                                })}
-                            />
-                        </Stack>
-
-                        <Divider>
-                            Nemate račun?
-                            <Link 
-                                onClick={handleNavigate} 
-                                sx={{ ml: 1, cursor: 'pointer' }}
-                            >
-                                Stvorite ga
-                            </Link>
-                        </Divider>
-
-                        {
-                            currentUser.status === 'loading' ?
-                                <LoadingButton
-                                    loading
-                                    loadingPosition="start"
-                                    startIcon={<SaveIcon />}
-                                    variant="outlined"
-                                    sx={{ height: 54, textTransform: 'none' }} 
-                                >
-                                    Prijavljivanje...
-                                </LoadingButton>
-                                :
-                                <Button
-                                    onClick={handleSubmit(onSubmit)}
-                                    sx={{ height: 54, textTransform: 'none' }} 
-                                    variant="contained" 
-                                    fullWidth
-                                    inputMode="submit"
-                                    disabled={!formState.isValid}
-                                >
-                                    { formState.isValid ? 'Prijava' : 'Unesite podatke' }
-                                </Button>
-                        }
-
-                        <Snackbar
-                            open={snackbarOpened}
-                            autoHideDuration={3000}
-                            onClose={closeSnackbar}
-                            message={SNACKBAR_ALERTS.login_error}
-                        >
-                            <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
-                                { SNACKBAR_ALERTS.login_error }
-                            </Alert>
-                        </Snackbar>
-                        
-                    </Stack>
+                currentUser.status === 'loading' ?
+                    <LoadingButton
+                        loading
+                        loadingPosition="start"
+                        startIcon={<SaveIcon />}
+                        variant="outlined"
+                        sx={{ height: 54, textTransform: 'none' }} 
+                    >
+                        Prijavljivanje...
+                    </LoadingButton>
                     :
-                    <Stack direction="row" spacing={4}>
-                        <Button onClick={() => onPrompt('app')}>App</Button>
-                        <Button onClick={() => onPrompt('admin')}>Admin panel</Button>
-                    </Stack>
+                    <Button
+                        onClick={handleSubmit(onSubmit)}
+                        sx={{ height: 54, textTransform: 'none' }} 
+                        variant="contained" 
+                        fullWidth
+                        inputMode="submit"
+                        disabled={!formState.isValid}
+                    >
+                        { formState.isValid ? 'Prijava' : 'Unesite podatke' }
+                    </Button>
             }
-        </>
+
+            <Snackbar
+                open={snackbarOpened}
+                autoHideDuration={3000}
+                onClose={closeSnackbar}
+                message={SNACKBAR_ALERTS.login_error}
+            >
+                <Alert onClose={closeSnackbar} severity="error" sx={{ width: '100%' }}>
+                    { SNACKBAR_ALERTS.login_error }
+                </Alert>
+            </Snackbar>
+            
+        </Stack>
     )
 }

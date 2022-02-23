@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'
 
 // Menu Items
-import menuItems from '../menu-items/App'
-import adminMenuItems from '../menu-items/Admin'
+import MenuItems from '../menu-items/App'
+import AdminMenuItems from '../menu-items/Admin'
 
 export default function useGetMenuItem() {
 
     // Variables
     const location = useLocation()
     const [menuItem, setMenuItem] = useState({})
+
+    const menuItems = MenuItems()
 
     // Methods
     useEffect(() => {
@@ -30,6 +32,7 @@ function useGetAdminMenuItem() {
     // Variables
     const location = useLocation()
     const [menuItem, setMenuItem] = useState({})
+    const adminMenuItems = AdminMenuItems()
 
     // Methods
     useEffect(() => {

@@ -65,7 +65,7 @@ export default function Appointments(){
         const { date, time, client, barber, hair_style } = form;
 
         const data = {
-            start_datetime: `${date} ${time}`,
+            start_datetime: `${date} ${time}+01:00`,
             client,
             order_items: [{
                 hair_style: hair_style.id,

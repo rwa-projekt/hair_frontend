@@ -1,72 +1,46 @@
-import React, { useState, useEffect } from 'react'
-
-// React router
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import React from 'react'
+import { useAuth } from '../../../auth'
 
 // MUI
-import { Box, Tabs, Tab } from '@mui/material'
+import { Grid, Avatar, Stack, Typography } from '@mui/material'
 
 // Components
 import PageTitle from '../../../components/PageTitle'
 
-function LinkTab(props) {
+export default function Dashboard(){
 
-    // Variables
-    const navigate = useNavigate()
-
-    return (
-      <Tab
-        component="a"
-        sx={{ 
-            textTransform: "none", 
-            mr: 2 
-        }}
-        onClick={(event) => {
-          event.preventDefault();
-          navigate(`/user/me/${props.value}`)
-        }}
-        {...props}
-      />
-    );
-  }
-
-
-export default function MyProfile(){
-
-    // Variables
-    const location = useLocation()
-    const [value, setValue] = useState(location.pathname.split('/')[3]);
-
-    // Methods
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
-    useEffect(() => {
-        setValue(location.pathname.split('/')[3])
-    }, [location])
+    const { user } = useAuth()
+    
+    console.log("USER => ", user)
 
     return(
-        <div id="profile-tabs">
-
+        <div>
             <PageTitle />
+            <Grid container spacing={8}>
 
-            {/* Tabs */}
-            <Box sx={{ width: '100%', mb: 4 }}>
-                <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                    <Tabs 
-                        value={value} 
-                        onChange={handleChange} 
-                        aria-label="basic tabs example"
-                    >
-                        <LinkTab label="Osnovno" value="general" />
-                        <LinkTab label="Smjene" value="shifts" />
-                    </Tabs>
-                </Box>
-            </Box>
+                <Grid item xs={12} sx={{ height: 80 }} />
 
-            {/* Rendering routes */}
-            <Outlet />
+                <Grid item xs={12} lg={4}>
+                    <Avatar 
+                        sx={{ width: 200, height: 200 }}
+                    />
+                </Grid>
+                <Grid item xs={12} lg={8}>
+                    <Stack direction="column" alignItems="flex-start" spacing={4}>
+                        <Information label="Ime i prezime" value={user.data.account.name || "Korisnik"} />
+                    </Stack>
+                </Grid>
+            </Grid>
+            
         </div>
+    )
+}
+
+function Information({ label = "", value = "" }){
+    return(
+        <Stack direction="column" alignItems="flex-start">
+            <Typography variant="body2">{ label }</Typography>
+            <Typography variant="h4">{ value }</Typography>
+        </Stack>
     )
 }

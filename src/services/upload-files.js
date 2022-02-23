@@ -31,7 +31,7 @@ export default function UploadImages({ multiple = false, setForm, initial = [], 
 
 		// Token
 		const token = await localStorage.getItem("token")
-		const options = { token, type: file.type }
+		const options = { token, contentType: 'multipart/form-data', type: file.type }
 
 		axios(options)
 			.post(`/${id}/set_avatar/`, formData)
@@ -56,7 +56,6 @@ export default function UploadImages({ multiple = false, setForm, initial = [], 
 		}
 
 		if(!!update){
-			console.log("UPDATE => ", !!update ? 'TRUE' : 'FALSE')
 			changeImage(e.target.files[0])
 		}
 	}

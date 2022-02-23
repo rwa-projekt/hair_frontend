@@ -1,11 +1,16 @@
-import about from './about';
+import About from './about';
 import pages from './pages'
 import more from './more'
 
 // ===========================|| MENU ITEMS ||=========================== //
 
-const menuItems = {
-    items: [pages, about, more]
-};
+export default function MenuItems(){
 
-export default menuItems;
+    const about = About()
+
+    const menuItems = {
+        items: [pages, about, more]
+    }
+
+    return menuItems
+}
