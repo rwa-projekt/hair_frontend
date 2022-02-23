@@ -1,5 +1,5 @@
 export const deploy = "DEV" // DEV | PRODUCTION
-export const public_url = "http://192.168.88.203:5555/api/"
+export const public_url = "http://ss-docker.sumit.sum.ba:5555/api/"
 
 // ===========================|| ENDPOINTS ||=========================== //
 
