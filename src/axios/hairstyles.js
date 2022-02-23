@@ -8,7 +8,7 @@ const instance = (options) => axios.create({
     timeout: 10000,
     headers: {
         Authorization: "Token " + options.token,
-        'Content-Type': options.contentType ? options.contentType : 'text/javascript'
+        'Content-Type': options.contentType ? options.contentType : 'application/json'
     },
 })
 
