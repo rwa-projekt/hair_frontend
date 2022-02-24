@@ -81,7 +81,7 @@ export default function Calendar() {
 	}
 
 	function parseTimestamp(timestamp){
-		return moment(timestamp).format('h:mm')
+		return moment(timestamp).format('H:mm')
 	}
 
 	function _freeTimestamps(){
