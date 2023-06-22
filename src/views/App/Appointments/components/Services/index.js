@@ -30,7 +30,7 @@ export default function Services(){
     }
 
     return(
-        <div id="appointments-services" style={{ width: '100%' }}>
+        <div id="appointments-services" style={{ width: '100%', marginTop: -60 }}>
             <Box sx={{ width: '100%' }}>
                 {
                     smallScreen &&

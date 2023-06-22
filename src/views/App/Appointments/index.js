@@ -15,7 +15,7 @@ export default function Appointments(){
     const initialForm = {
         date: "",
         time: "",
-        client: user.data.account.id,
+        client: user?.data?.account?.id,
         barber: null,
         hair_style: null,
     }
@@ -28,7 +28,7 @@ export default function Appointments(){
     const checkout = {
         date: form.date,
         time: form.time,
-        client: user.data.account.name || "Korisnik",
+        client: user?.data?.account?.name || "Korisnik",
         barber: form.barber?.name,
         price: form.hair_style?.price,
         time_needed: form.hair_style?.time_needed,

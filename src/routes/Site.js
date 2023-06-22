@@ -18,7 +18,7 @@ const SiteRoutes = {
     children: [
         {
             path: '/',
-            element: <Navigate to="/website/about-us" />
+            element: <Navigate to="/website/home" />
         },
         {
             path: '/website',
@@ -29,16 +29,16 @@ const SiteRoutes = {
                 },
                 {
                     path: '',
-                    element: <Navigate to="about-us" />
+                    element: <Navigate to="home" />
+                },
+                {
+                    path: 'home',
+                    element: <LandingPage/>
                 },
                 // {
-                //     path: 'home',
-                //     element: <LandingPage/>
-                // },
-                {
-                    path: 'about-us',
-                    element: <AboutUs/>
-                }
+                //     path: 'about-us',
+                //     element: <AboutUs/>
+                // }
             ]
         },
     ]

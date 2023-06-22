@@ -20,7 +20,7 @@ export default function Banner(){
     const isTablet = useIsTablet()
 
     // Variables
-    const firstName = user.data.account.name.split(' ')[0] || 'Korisnik'
+    const firstName = user?.data?.account?.name?.split(' ')[0] || 'Korisnik'
 
     // Methods
     function handleNavigateToProfile(){

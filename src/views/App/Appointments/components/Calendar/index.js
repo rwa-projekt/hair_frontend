@@ -14,13 +14,13 @@ import hrLocale from 'date-fns/locale/hr'
 
 // MUI
 import { TextField, Box, Paper, Stack, Chip, Typography } from '@mui/material';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import StaticDatePicker from '@mui/lab/StaticDatePicker';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
 import CalendarPicker from '@mui/lab/CalendarPicker';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 // Components
 import ScrollView from '../../../../../components/ScrollView'
+import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const allTimestamps = [
     "9:00", "9:30", "10:00", "10:30","11:00", "11:30",
@@ -162,7 +162,7 @@ export default function Calendar() {
 							date={value}
 							shouldDisableDate={isWeekend}
 							minDate={new Date()}
-							showToolbar
+							showToolbar={false}
 							toolbarTitle="Izaberite datum"
 							onChange={newValue => handleOnChange(newValue)}
 							renderInput={(params) => <TextField {...params} />}
@@ -176,9 +176,9 @@ export default function Calendar() {
 						<Paper
 							elevation={0} 
 							sx={{ 
-								width: 80, height: 80,
+								width: 160, height: 60,
 								position: 'absolute',
-								bottom: 0, left: 0
+								bottom: 0, right: 0,
 							}}
 						/>
 				}

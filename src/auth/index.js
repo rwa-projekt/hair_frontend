@@ -23,7 +23,7 @@ function AuthProvider({ children }) {
   // Current user
   const user = useSelector(state => state.USER.user);
   const isAuthenticated = !!user?.data?.token
-  const isAdmin = user?.data?.account.is_admin
+  const isAdmin = user?.data?.account?.is_admin
   // Methods
 
   // Handling initial redirects
@@ -55,9 +55,6 @@ function AuthProvider({ children }) {
   useEffect(() => {
     getUser(userRedirect, adminRedirect)
   }, [])
-
-  console.log("User => ", user)
-
 
   // Login
   async function login(user, userCallback, adminCallback, error){

@@ -13,10 +13,10 @@ import { getApiEndpoint } from "../../../axios/endpoints";
 const initialState = {
   user: {
     status: "",
-    token: null,
+    token: "asgasgS",
     account: {
-        id: null,
-        name: "",
+        id: 1,
+        name: "Test",
         email: "",
         is_admin: false,
         phone_number: null
@@ -33,7 +33,7 @@ const initialState = {
   },
   getUser: {
     status: "loading",
-    token: null,
+    token: "asgasg",
     account: {
         id: null,
         name: "",

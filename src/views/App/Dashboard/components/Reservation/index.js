@@ -16,6 +16,7 @@ export default function DataGridDemo() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const reservations = useSelector(state => state.RESERVATIONS.reservations)
+    console.log("🚀 ~ file: index.js:19 ~ DataGridDemo ~ reservations:", reservations)
 
     // Methods
     useEffect(() => {
@@ -75,7 +76,7 @@ export default function DataGridDemo() {
             {
                 reservations.data.length ?
                     <>
-                    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ height: 20 }}>
+                    {/* <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ height: 20 }}>
                         <Typography variant="h6" sx={{ fontWeight: 500 }}>{ smallScreen && "Rezervacija" }</Typography>
                         <Typography
                             onClick={handleNavigate}
@@ -84,15 +85,28 @@ export default function DataGridDemo() {
                         >
                             Vidi sve
                         </Typography>
-                    </Stack>
+                    </Stack> */}
+                    <img 
+                        src={data.avatar}  
+                        style={{ width: '100%', height: 120, objectFit: 'cover', borderRadius: 16 }}
+                    />
                     <Stack
                         direction="column"
                         alignItems={smallScreen ? "flex-start" : "flex-end"}
                         justifyContent="space-between"
-                        sx={{ width: '100%', height: 180, mt: 3, p: 0, borderRadius: 2 }}
-                        spacing={3}
+                        sx={{ width: '100%', height: 180, mt: 1, p: 0, borderRadius: 2 }}
+                        spacing={1}
                     >
-                        <Typography variant="caption" sx={{ fontSize: 14, opacity: .75 }}>
+                         <Stack
+                            direction="column"
+                            alignItems="flex-start"
+                            justifyContent="center"
+                            sx={{ width: '100%' }}
+                        >
+                            <Typography variant="h6" sx={{ textAlign:'left' }}>{ data.service }</Typography>
+                            <Typography variant="subtitle2" sx={{ opacity: .75, fontWeight: 400, textAlign: 'left' }}>{ data.total_price }</Typography>
+                        </Stack>
+                        {/* <Typography variant="caption" sx={{ fontSize: 14, opacity: .75 }}>
                             { data.start_datetime }
                         </Typography>
                         <Stack
@@ -108,23 +122,23 @@ export default function DataGridDemo() {
                             />
                             <Stack
                                 direction="column"
-                                alignItems={smallScreen ? "flex-start" : "flex-end"}
+                                alignItems="flex-start"
                                 justifyContent="center"
                                 sx={{ width: '100%' }}
                             >
-                                <Typography variant="h6" sx={{ textAlign: smallScreen ? 'left' : 'right' }}>{ data.service }</Typography>
-                                <Typography variant="subtitle2" sx={{ opacity: .75, fontWeight: 400 }}>{ data.barber }</Typography>
+                                <Typography variant="h6" sx={{ textAlign:'left' }}>{ data.service }</Typography>
+                                <Typography variant="subtitle2" sx={{ opacity: .75, fontWeight: 400, textAlign: 'left' }}>{ data.total_price }</Typography>
                             </Stack>
-                        </Stack>
+                        </Stack> */}
                         <Stack
                             direction="row"
                             alignItems="center"
-                            justifyContent={smallScreen ? "flex-start" : "flex-end"}
+                            justifyContent="flex-start"
                             sx={{ width: '100%' }}
                             spacing={2}
                         >
-                            <Chip label={data.duration} variant="outlined" />
-                            <Chip label={data.total_price} variant="outlined" />
+                            <Chip label={data.start_datetime} variant="filled" color="primary" />
+                            <Chip label={data.barber} variant="filled" color="default" />
                             <Chip 
                                 label={data.status === 'active' ? 'Aktivna' : 'Završena'}
                                 color={data.status === 'active' ? 'success' : 'error'}

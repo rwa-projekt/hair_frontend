@@ -24,7 +24,6 @@ export default function DataGridDemo() {
   const location = useLocation()
   const [value, setValue] = useState(location.pathname.split('/')[2]);
 
-  console.log("Value => ", value)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

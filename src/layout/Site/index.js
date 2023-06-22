@@ -97,7 +97,7 @@ export default function SiteLayout() {
 
                                         <div style={{ width: 1, height: 32, backgroundColor: '#e4e4e4' }} />
 
-                                        {/* <Typography
+                                        <Typography
                                             onClick={() => handleNavigate('home')} 
                                             component="a" 
                                             variant="body2" 
@@ -108,9 +108,9 @@ export default function SiteLayout() {
                                             }}
                                         >
                                             Početna
-                                        </Typography> */}
+                                        </Typography>
 
-                                        <Typography
+                                        {/* <Typography
                                             onClick={() => handleNavigate('about-us')} 
                                             component="a" 
                                             variant="body2" 
@@ -121,20 +121,20 @@ export default function SiteLayout() {
                                             }}
                                         >
                                             O nama
-                                        </Typography>
+                                        </Typography> */}
 
                                         </Stack>
 
 
                                         <Stack spacing={2} alignItems="center" direction="row">
-                                        <Button 
+                                        {/* <Button 
                                             sx={{ textTransform: 'none', borderRadius: 40, borderColor: '#cdcdcd' }} 
                                             onClick={handleOnVisionClick} 
                                             color="inherit"
                                             variant="outlined"
                                         >
                                             Vizija
-                                        </Button>
+                                        </Button> */}
                                         <Button 
                                             sx={{ textTransform: 'none', borderRadius: 40 }}
                                             disableElevation
